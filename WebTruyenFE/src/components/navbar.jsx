@@ -10,10 +10,10 @@ export const Navbar = () => {
       <img src={minilogo} className="w-20"/>
       <DropdownNav
         content={"Danh sách"}
-        list={["Truyện mới cập nhập", "Truyện Hot"]}
+        list={[{content:"Truyện mới cập nhập"}, {content:"Truyện Hot"}]}
       />
-      <DropdownNav content={"Thể loại"} list={["Tiên hiệp", "Kiếm hiệp"]} />
-      <DropdownNav content={"Tủ sách"} list={["Truyện đã đọc", "Truyện đã thích"]} />
+      <DropdownNav content={"Thể loại"} list={[{content: "Tiên hiệp"}, {content: "Kiếm hiệp"}]} />
+      <DropdownNav content={"Tủ sách"} list={[{content:"Truyện đã đọc"}, {conent:"Truyện đã thích"}]} />
       <div className="flex bg-white text-black">
         <input className="px-3 py-1" placeholder="Search"/> 
       </div>

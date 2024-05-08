@@ -10,15 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@preact/signals-react": "^2.0.1",
+    "@tinymce/tinymce-react": "^5.0.1",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.8",
+    "iconify": "^1.4.0",
     "postcss": "^8.4.38",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.23.0",
     "recoil": "^0.7.7"
   },
   "devDependencies": {
+    "@iconify/react": "^4.1.1",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react-swc": "^3.5.0",
