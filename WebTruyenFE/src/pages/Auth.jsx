@@ -6,7 +6,7 @@ import { SignUpContainer } from "../components/signUpContainer";
 export const Auth = ({ type = "login" }) => {
   return (
     <>
-      <div className="overflow-hidden md:h-[calc(100vh-96px)] h-[calc(100vh-64px)] max-w-screen-xl m-auto bg-white text-black">
+      <div className="overflow-hidden md:h-[calc(100vh-96px)] h-[calc(100vh-64px)] px-10 max-w-screen-xl m-auto bg-white text-black">
         <div className="h-full flex items-center justify-between md:justify-between overflow-hidden">
           <img
             alt="blb"

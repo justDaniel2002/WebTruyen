@@ -30,15 +30,7 @@ export const LoginContainer = () => {
           Đăng Nhập
         </button>
 
-        {/* <div className="text-center mb-4">{$t("or use another account")}</div>
-        <div className="flex justify-center text-5xl">
-          <div role="button" on:click={LWF} on:keydown={LWF} tabindex="0">
-            <Icon icon="logos:facebook" className="mr-3" />
-          </div>
-          <div role="button" on:click={LWG} on:keydown={LWG} tabindex="0">
-            <Icon icon="akar-icons:google-contained-fill" />
-          </div>
-        </div> */}
+       
 
        
       </div>
