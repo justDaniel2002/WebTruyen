@@ -1,0 +1,18 @@
+export const listCard = [
+  { image: "/src/assets/novelcomlogo.png", name: "so 1", id: 1 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 2", id: 2 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 3", id: 3 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 4", id: 4 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 5", id: 5 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 6", id: 6 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+  { image: "/src/assets/novelcomlogo.png", name: "so 7", id: 7 },
+];

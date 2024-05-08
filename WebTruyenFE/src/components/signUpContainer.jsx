@@ -1,48 +1,45 @@
 export const SignUpContainer = () => {
-    return (
-      <>
-        <div className="rounded-xl px-7 py-10 bg-white border-black border text-black">
-          <h3 class="font-bold text-5xl mb-8 text-center">NOVELCOM</h3>
-  
-          <div class="mb-3">
-              <div className="mb-3 text-xl font-semibold">Email</div>
-            <input
-              className="w-full rounded-xl px-5 py-2 border border-black"
-              placehoder="Email"
-            />
-          </div>
-          <div class="mb-3">
-              <div className="mb-3 text-xl font-semibold">Username</div>
-            <input
-              className="w-full rounded-xl px-5 py-2 border border-black"
-              placehoder="Username"
-            />
-          </div>
-          <div class="mb-3">
+  return (
+    <>
+      <div className="rounded-xl px-7 py-10 bg-white border-black border text-black">
+        <h3 className="font-bold text-5xl mb-8 text-center">NOVELCOM</h3>
+
+        <div className="mb-3">
+          <div className="mb-3 text-xl font-semibold">Email</div>
+          <input
+            className="w-full rounded-xl px-5 py-2 border border-black"
+            placeholder="Email"
+          />
+        </div>
+        <div className="mb-3">
+          <div className="mb-3 text-xl font-semibold">Username</div>
+          <input
+            className="w-full rounded-xl px-5 py-2 border border-black"
+            placeholder="Username"
+          />
+        </div>
+        <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Password</div>
-            <input
-              className="w-full rounded-xl px-5 py-2 border border-black"
-              placehoder="Password"
-              type="password"
-            />
-          </div>
-          <div class="mb-3">
+          <input
+            className="w-full rounded-xl px-5 py-2 border border-black"
+            placeholder="Password"
+            type="password"
+          />
+        </div>
+        <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Re-Password</div>
-            <input
-              className="w-full rounded-xl px-5 py-2 border border-black"
-              placehoder="Password"
-              type="Re enter password"
-            />
-          </div>
-          <div class="my-10"></div>
-          <button
-           
-            class="bg-blue-500 rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out w-full mb-2"
-          >
-            Đăng Kí
-          </button>
-  
-          {/* <div class="text-center mb-4">{$t("or use another account")}</div>
+          <input
+            className="w-full rounded-xl px-5 py-2 border border-black"
+            placeholder="Password"
+            type="Re enter password"
+          />
+        </div>
+        <div className="my-10"></div>
+        <button className="bg-blue-500 rounded-md justify-center p-3 font-medium text-white items-center inline-flex border-2 hover:-translate-x-2 hover:text-black hover:bg-white transition ease-in-out w-full mb-2">
+          Đăng Kí
+        </button>
+
+        {/* <div class="text-center mb-4">{$t("or use another account")}</div>
           <div class="flex justify-center text-5xl">
             <div role="button" on:click={LWF} on:keydown={LWF} tabindex="0">
               <Icon icon="logos:facebook" class="mr-3" />
@@ -51,10 +48,7 @@ export const SignUpContainer = () => {
               <Icon icon="akar-icons:google-contained-fill" />
             </div>
           </div> */}
-  
-         
-        </div>
-      </>
-    );
-  };
-  
+      </div>
+    </>
+  );
+};
