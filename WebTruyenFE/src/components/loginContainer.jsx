@@ -8,14 +8,14 @@ export const LoginContainer = () => {
             <div className="mb-3 text-xl font-semibold">Email</div>
           <input
             className="w-full rounded-xl px-5 py-2 border border-black"
-            placehoder="Email"
+            placeholder="Email"
           />
         </div>
         <div className="mb-3">
         <div className="mb-3 text-xl font-semibold">Password</div>
           <input
             className="w-full rounded-xl px-5 py-2 border border-black"
-            placehoder="Password"
+            placeholder="Password"
             type="password"
           />
         </div>
