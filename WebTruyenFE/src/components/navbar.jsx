@@ -5,17 +5,22 @@ import { DropdownNav } from "./dropdownNav";
 export const Navbar = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex justify-around px-20 py-10 items-center bg-blue-950 text-white  m-auto">
-      <Link to={"/"}>
+    <div className=" bg-blue-950 text-white">
+      <div className="flex justify-between py-2 items-center lg:max-w-screen-xl m-auto">
+        <Link to={"/"}>
           <img src={minilogo} className="w-12" />
         </Link>
-      <DropdownNav
-        content={"Danh sách"}
-        list={["Truyện mới cập nhập", "Truyện Hot"]}
-      />
-      <DropdownNav content={"Thể loại"} list={["Tiên hiệp", "Kiếm hiệp"]} />
-      <DropdownNav content={"Tủ sách"} list={["Truyện đã đọc", "Truyện đã thích"]} />
-      
+        <div>
+          <DropdownNav
+            content={"Danh sách"}
+            list={["Truyện mới cập nhập", "Truyện Hot"]}
+          />
+          <DropdownNav content={"Thể loại"} list={["Tiên hiệp", "Kiếm hiệp"]} />
+          <DropdownNav
+            content={"Tủ sách"}
+            list={["Truyện đã đọc", "Truyện đã thích"]}
+          />
+        </div>
 
         <div className="flex">
           <div className="flex bg-white text-black mr-10">
@@ -37,6 +42,6 @@ export const Navbar = () => {
           </div>
         </div>
       </div>
-    
+    </div>
   );
 };
