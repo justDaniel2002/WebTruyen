@@ -2,6 +2,8 @@
 {
     public class StoryRequest
     {
-        public 
+        public int categoryID;
+        public string searchValue;
+        public string numberOfChapters; 
     }
 }
