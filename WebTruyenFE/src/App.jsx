@@ -12,8 +12,14 @@ import { Auth } from "./pages/Auth";
 import { AdminPage } from "./pages/Admin/AdminPage";
 import { CreateEditNovel } from "./pages/Admin/CreateEditNovel";
 import { AdminLayout } from "./layouts/adminLayout";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { CookiesProvider } from "react-cookie";
+import { RecoilRoot } from "recoil";
 
 function App() {
+  
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
@@ -35,7 +41,12 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <CookiesProvider defaultSetOptions={{ path: "/" }}>
+        <RecoilRoot>
+          <RouterProvider router={router} />
+          <ToastContainer position="top-right" />
+        </RecoilRoot>
+      </CookiesProvider>
     </>
   );
 }

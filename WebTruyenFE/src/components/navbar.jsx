@@ -1,8 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import minilogo from "../assets/minilogowhite.png";
 import { DropdownNav } from "./dropdownNav";
+import { useRecoilState } from "recoil";
+import { categoriesAtom } from "../states/atom";
 
 export const Navbar = () => {
+  const [categories, setCate] = useRecoilState(categoriesAtom);
+
+  let mapCate = [];
+
+  if (categories?.length > 0) {
+    mapCate = categories.map((cate) => {
+      return { content: cate.name, link: `category/${cate.id}` };
+    });
+  }
+
   const navigate = useNavigate();
   return (
     <div className=" bg-blue-950 text-white">
@@ -13,12 +25,18 @@ export const Navbar = () => {
         <div>
           <DropdownNav
             content={"Danh sách"}
-            list={[{content:"Truyện mới cập nhập",link:""}, {content:"Truyện Hot",link:""}]}
+            list={[
+              { content: "Truyện mới cập nhập", link: "" },
+              { content: "Truyện Hot", link: "" },
+            ]}
           />
-          <DropdownNav content={"Thể loại"} list={[{content:"Tiên Hiệp",link:""}, {content:"Kiếm Hiệp",link:""}]} />
+          <DropdownNav content={"Thể loại"} list={mapCate} />
           <DropdownNav
             content={"Tủ sách"}
-            list={[{content:"Truyện đã đọc",link:""}, {content:"Truyện đã thích",link:""}]}
+            list={[
+              { content: "Truyện đã đọc", link: "" },
+              { content: "Truyện đã thích", link: "" },
+            ]}
           />
         </div>
 
