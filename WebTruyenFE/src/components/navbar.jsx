@@ -13,12 +13,12 @@ export const Navbar = () => {
         <div>
           <DropdownNav
             content={"Danh sách"}
-            list={["Truyện mới cập nhập", "Truyện Hot"]}
+            list={[{content:"Truyện mới cập nhập",link:""}, {content:"Truyện Hot",link:""}]}
           />
-          <DropdownNav content={"Thể loại"} list={["Tiên hiệp", "Kiếm hiệp"]} />
+          <DropdownNav content={"Thể loại"} list={[{content:"Tiên Hiệp",link:""}, {content:"Kiếm Hiệp",link:""}]} />
           <DropdownNav
             content={"Tủ sách"}
-            list={["Truyện đã đọc", "Truyện đã thích"]}
+            list={[{content:"Truyện đã đọc",link:""}, {content:"Truyện đã thích",link:""}]}
           />
         </div>
 
