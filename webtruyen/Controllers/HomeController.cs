@@ -27,11 +27,11 @@ namespace webtruyen.Controllers
             return Ok(categories);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("getAllStories")]
         public IActionResult getAllStories([FromBody] StoryRequest storyRequest)
         {
-            List<Story> stories = context.Stories.Include(n => n.Category).Include(n => n.Chapers).Where(n => n.IsActive).ToList();
+            List<Story> stories = context.Stories.Include(n => n.Category).Include(n => n.Chapers).Where(n => n.IsActive == true).ToList();
             if(storyRequest != null)
             {
                 if (storyRequest.categoryID != null)
@@ -95,10 +95,27 @@ namespace webtruyen.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("userprofile")]
+        [Authorize]
+        public IActionResult getUserProfile()
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
+            return Ok(account);
+        }
+
         [HttpGet]
         [Route("history")]
         [Authorize]
-        public IActionResult getHistory(int id)
+        public IActionResult getHistory()
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
             var token = authHeader.Substring("Bearer ".Length).Trim();
@@ -111,5 +128,7 @@ namespace webtruyen.Controllers
             List<Story> stories = context.Stories.Where(n => n.Users.FirstOrDefault().Email == email).ToList();
             return Ok(stories);
         }
+
+
     }
 }
