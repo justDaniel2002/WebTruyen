@@ -17,6 +17,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { CookiesProvider } from "react-cookie";
 import { RecoilRoot } from "recoil";
 import { Detail } from "./pages/Detail";
+import { ChapterDetail } from "./pages/ChapterDetail";
+import { ListStoriesOfCate } from "./pages/ListStoriesOfCate";
+import { ListSearchStories } from "./pages/ListSearchStories";
 
 function App() {
   
@@ -30,6 +33,9 @@ function App() {
           <Route path="/login" element={<Auth />} />
           <Route path="/signUp" element={<Auth type="signUp" />} />
           <Route path="/noveldetail/:id" element={<Detail />} />
+          <Route path="/chapter/:nid/:id" element={<ChapterDetail />} />
+          <Route path="/storiesofcate/:id" element={<ListStoriesOfCate />} />
+          <Route path="/search/:search" element={<ListSearchStories />} />
 
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminPage />} />
