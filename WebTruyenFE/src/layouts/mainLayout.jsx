@@ -13,9 +13,9 @@ export const MainLayout = () => {
     getStories({}).then((res) => setStories(res));
   }, []);
   return (
-    <>
+    <div className="bg-neutral-200 min-h-screen">
       <Navbar />
       <Outlet />
-    </>
+    </div>
   );
 };

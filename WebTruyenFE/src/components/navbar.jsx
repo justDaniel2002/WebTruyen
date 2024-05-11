@@ -11,7 +11,7 @@ export const Navbar = () => {
 
   if (categories?.length > 0) {
     mapCate = categories.map((cate) => {
-      return { content: cate.name, link: `category/${cate.id}` };
+      return { content: cate.name, link: `/storiesofcate/${cate.id}` };
     });
   }
 
@@ -42,7 +42,11 @@ export const Navbar = () => {
 
         <div className="flex">
           <div className="flex bg-white text-black mr-10">
-            <input className="px-3 py-1" placeholder="Search" />
+            <input onKeyDown={(event) => {
+               if (event.key == 'Enter'&&event.target.value.trim()!="") {
+                navigate(`/search/${event.target.value}`)
+              }
+            }} className="px-3 py-1" placeholder="Search" />
           </div>
           <div className="flex">
             <button
