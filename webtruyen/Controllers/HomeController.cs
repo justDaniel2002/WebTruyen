@@ -85,9 +85,32 @@ namespace webtruyen.Controllers
         public IActionResult getChapterDetailByID(int id)
         {
             Chaper chaper = context.Chapers.FirstOrDefault(n => n.Id == id);
-            if (chaper != null)
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
+            if (chaper != null )
             {
-                return Ok(chaper);
+                if(chaper.Status == false)
+                {
+                    return Ok(chaper);
+                }
+                else
+                {
+                    if (account != null && account.Chapters.Contains(chaper))
+                    {
+                        return Ok(chaper);
+                    }
+                    else
+                    {
+                        return BadRequest("Bạn cần unlock để đọc trang truyện này");
+                    }                
+                }
             }
             else
             {
@@ -129,6 +152,60 @@ namespace webtruyen.Controllers
             return Ok(stories);
         }
 
+        [HttpPost]
+        [Route("unlock-all")]
+        [Authorize]
+        public IActionResult unlockStoryAll([FromBody] int storyID)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
 
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
+            Story story = context.Stories.Include(n => n.Chapers).FirstOrDefault(n => n.Id == storyID);
+            if (story != null && account.AccountBalance == (10 * story.Chapers.Count()))
+            {
+                account.Chapters = story.Chapers.Where(n => n.Status == true).ToList();
+                account.AccountBalance = account.AccountBalance - (10 * story.Chapers.Count());
+                context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Không đủ xu. Vui lòng nạp thêm để đọc truyện");
+            }
+        }
+
+        [HttpPost]
+        [Route("unlockChapters")]
+        [Authorize]
+        public IActionResult unlockChapters([FromBody] List<long> chapterIDs)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
+            List<Chaper> chapers = context.Chapers.Include(n => chapterIDs.Contains(n.Id)).ToList();
+            if (chapers != null && account.AccountBalance == (10 * chapers.Count()))
+            {
+                account.Chapters = chapers;
+                account.AccountBalance = account.AccountBalance - (10 * chapers.Count());
+                context.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Không đủ xu. Vui lòng nạp thêm để đọc truyện");
+            }
+        }
     }
 }

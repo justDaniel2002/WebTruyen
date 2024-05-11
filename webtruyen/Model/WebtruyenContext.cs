@@ -23,6 +23,8 @@ public partial class WebtruyenContext : DbContext
 
     public virtual DbSet<Review> Reviews { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
     public virtual DbSet<Story> Stories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -48,6 +50,7 @@ public partial class WebtruyenContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("expireTime");
             entity.Property(e => e.IsActive).HasColumnName("isActive");
+            entity.Property(e => e.IsDelete).HasColumnName("isDelete");
             entity.Property(e => e.ModifiedDate)
                 .HasColumnType("datetime")
                 .HasColumnName("modifiedDate");
@@ -55,7 +58,32 @@ public partial class WebtruyenContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(50)
                 .HasColumnName("phone");
+            entity.Property(e => e.RoleId).HasColumnName("roleID");
             entity.Property(e => e.Token).HasColumnName("token");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Accounts)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Account_Role");
+
+            entity.HasMany(d => d.Chapters).WithMany(p => p.Accounts)
+                .UsingEntity<Dictionary<string, object>>(
+                    "AccountChaper",
+                    r => r.HasOne<Chaper>().WithMany()
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_AccountChaper_Chaper"),
+                    l => l.HasOne<Account>().WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_AccountChaper_Account"),
+                    j =>
+                    {
+                        j.HasKey("AccountId", "ChapterId");
+                        j.ToTable("AccountChaper");
+                        j.IndexerProperty<long>("AccountId").HasColumnName("accountID");
+                        j.IndexerProperty<long>("ChapterId").HasColumnName("chapterID");
+                    });
 
             entity.HasMany(d => d.Stories).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(
@@ -92,7 +120,7 @@ public partial class WebtruyenContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Content)
-                .HasColumnType("text")
+                .HasColumnType("ntext")
                 .HasColumnName("content");
             entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.Order).HasColumnName("order");
@@ -126,6 +154,14 @@ public partial class WebtruyenContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Review_Account");
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.ToTable("Role");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name).HasColumnName("name");
         });
 
         modelBuilder.Entity<Story>(entity =>
