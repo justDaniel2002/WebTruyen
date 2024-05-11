@@ -16,6 +16,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CookiesProvider } from "react-cookie";
 import { RecoilRoot } from "recoil";
+import { Detail } from "./pages/Detail";
 
 function App() {
   
@@ -28,6 +29,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Auth />} />
           <Route path="/signUp" element={<Auth type="signUp" />} />
+          <Route path="/noveldetail/:id" element={<Detail />} />
 
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminPage />} />
