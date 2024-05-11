@@ -23,11 +23,19 @@ public partial class Account
 
     public string? Token { get; set; }
 
+    public int RoleId { get; set; }
+
     public DateTime? ExpireTime { get; set; }
 
     public decimal? AccountBalance { get; set; }
 
+    public bool? IsDelete { get; set; }
+
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+    public virtual Role Role { get; set; } = null!;
+
+    public virtual ICollection<Chaper> Chapters { get; set; } = new List<Chaper>();
 
     public virtual ICollection<Story> Stories { get; set; } = new List<Story>();
 }

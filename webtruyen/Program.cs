@@ -1,7 +1,7 @@
-
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -36,7 +36,7 @@ builder.Services.AddAuthorization();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -64,12 +64,12 @@ app.MapPost("/security/createToken",
 [AllowAnonymous] (Account user) =>
 {
     WebtruyenContext context = new WebtruyenContext();
-    if (context.Accounts.FirstOrDefault(n => n.Email.Equals(user.Email) && n.Password.Equals(user.Password)) != null)
+    Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email.Equals(user.Email) && n.Password.Equals(user.Password));
+    if (account != null)
     {
         var issuer = builder.Configuration["Jwt:Issuer"];
         var audience = builder.Configuration["Jwt:Audience"];
-        var key = Encoding.ASCII.GetBytes
-        (builder.Configuration["Jwt:Key"]);
+        var key = Encoding.ASCII.GetBytes (builder.Configuration["Jwt:Key"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
@@ -78,7 +78,8 @@ app.MapPost("/security/createToken",
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti,
-                Guid.NewGuid().ToString())
+                Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role,account.Role.Name)
             }),
             Expires = DateTime.UtcNow.AddMinutes(5),
             Issuer = issuer,

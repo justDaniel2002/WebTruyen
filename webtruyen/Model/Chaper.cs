@@ -18,4 +18,6 @@ public partial class Chaper
     public bool Status { get; set; }
 
     public virtual Story Story { get; set; } = null!;
+
+    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 }
