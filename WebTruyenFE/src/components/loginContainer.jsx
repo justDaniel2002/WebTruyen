@@ -4,9 +4,9 @@ import { useCookies } from 'react-cookie';
 
 export const LoginContainer = () => {
   useSignal;
-  const email = signal("email");
-  const password = signal("password");
-  const [cookies, setCookie] = useCookies(['JWT']);
+  const email = signal("");
+  const password = signal("");
+  const [, setCookie] = useCookies(['JWT']);
 
   const Login = async () => {
     const result = await login({ email: email.value, password: password.value });
@@ -21,7 +21,6 @@ export const LoginContainer = () => {
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Email</div>
           <input
-            value={email.value}
             onChange={(event) => {
               email.value = event.target.value;
             }}
@@ -32,7 +31,6 @@ export const LoginContainer = () => {
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Password</div>
           <input
-            value={password.value}
             onChange={(event) => {
               password.value = event.target.value;
             }}
