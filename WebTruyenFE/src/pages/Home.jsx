@@ -4,10 +4,13 @@ import { useRecoilState } from "recoil";
 import { categoriesAtom, storiesAtom } from "../states/atom";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "../components/drowdown";
+import { signal, useSignal } from "@preact/signals-react";
 
 export const Home = () => {
   const [stories, setStories] = useRecoilState(storiesAtom);
   const [categories, setCate] = useRecoilState(categoriesAtom);
+
+  const storyCategory = signal("");
 
   const navigate = useNavigate();
   return (
@@ -18,6 +21,7 @@ export const Home = () => {
           <h2 className="text-xl font-medium">Truyện hot</h2>
           <div>
             <select
+              onChange={(e) => (storyCategory.value = e.target.value)}
               id="countries"
               className=" border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full py-2 px-2 "
             >
