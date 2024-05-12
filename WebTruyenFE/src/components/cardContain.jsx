@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const CardContain = ({ image, name, id }) => {
   return (
-    <Link to={`/${id}`}>
+    <Link to={`/${id}`} className="">
       <div
         className={`w-full h-full bg-cover bg-center relative`}
         style={{
