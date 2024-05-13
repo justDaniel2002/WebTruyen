@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using webtruyen.DTO;
 using webtruyen.Model;
+using webtruyen.Ulti;
 
 namespace webtruyen.Controllers
 {
@@ -69,7 +70,7 @@ namespace webtruyen.Controllers
         [Route("getStoryDetail/{id}")]
         public IActionResult getStoryByID(int id)
         {
-            Story story = context.Stories.Include(n => n.Category).Include(n => n.Chapers).FirstOrDefault(n => n.Id == id);
+            Story story = context.Stories.Include(n => n.Category).Include(n => n.Chapers).Include(n => n.Reviews).ThenInclude(n => n.User).FirstOrDefault(n => n.Id == id);
             if(story != null)
             {
                 return Ok(story);
@@ -117,10 +118,9 @@ namespace webtruyen.Controllers
                 return NotFound();
             }
         }
-
+        [Authorize(Policy = "User")]
         [HttpPost]
         [Route("userprofile")]
-        [Authorize]
         public IActionResult getUserProfile()
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
@@ -131,13 +131,12 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
+            Account account = context.Accounts.FirstOrDefault(n => n.Email == email);
             return Ok(account);
         }
-
+        [Authorize(Policy = "User")]
         [HttpGet]
-        [Route("history")]
-        [Authorize]
+        [Route("history")] 
         public IActionResult getHistory()
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
@@ -154,7 +153,7 @@ namespace webtruyen.Controllers
 
         [HttpPost]
         [Route("unlock-all")]
-        [Authorize]
+        [Authorize(Policy = "User")]
         public IActionResult unlockStoryAll([FromBody] int storyID)
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
@@ -182,7 +181,7 @@ namespace webtruyen.Controllers
 
         [HttpPost]
         [Route("unlockChapters")]
-        [Authorize]
+        [Authorize(Policy = "User")]
         public IActionResult unlockChapters([FromBody] List<long> chapterIDs)
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
@@ -207,5 +206,88 @@ namespace webtruyen.Controllers
                 return BadRequest("Không đủ xu. Vui lòng nạp thêm để đọc truyện");
             }
         }
+
+        [HttpPost]
+        [Route("createReview")]
+        [Authorize(Policy = "User")]
+        public IActionResult createReview([FromBody] ReviewDTO reviewDTO)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
+            Review review = new Review()
+            {
+                Content = reviewDTO.content,
+                CreatedDate = DateTime.Now,
+                Story = context.Stories.FirstOrDefault(n => n.Id == reviewDTO.storyID)
+            };
+            context.Add(review);
+            context.SaveChanges();
+            return Ok("Create Review Successfully!");
+        }
+
+        [HttpPost]
+        [Route("addStory")]
+        [Authorize(Policy = "User,Admin")]
+        public IActionResult createStory([FromBody] StoryCreateRequest request)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
+            Story story = new Story()
+            {
+                Title = request.title,
+                Description = request.description,
+                Category = context.Categories.FirstOrDefault(n => n.Id == request.categoryID),
+                CreatedDate = DateTime.Now,
+                IsActive = true,
+                Status = "Hot",
+                Image = Helper.UploadPhoto(request.image.OpenReadStream())
+            };
+            context.Add(story);
+            context.SaveChanges();
+            return Ok("Create Story Successfully!");
+        }
+
+        [HttpPost]
+        [Route("addChapter")]
+        [Authorize(Policy = "User,Admin")]
+        public IActionResult createChapter([FromBody] ChapterDTO request)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
+            Chaper chapter = new Chaper()
+            {
+                Content = request.content,
+                Name = request.name,
+                Order = request.order,
+                Status = true,
+                Story = context.Stories.FirstOrDefault(n => n.Id == request.storyID)
+            };
+            context.Add(chapter);
+            context.SaveChanges();
+            return Ok("Create Chapter Successfully!");
+        }
+
+
     }
 }

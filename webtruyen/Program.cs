@@ -28,12 +28,15 @@ builder.Services.AddAuthentication(options =>
         (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = false,
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true
     };
 });
-builder.Services.AddAuthorization();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "ADMIN"));
+    options.AddPolicy("User", policy => policy.RequireClaim(ClaimTypes.Role, "USER"));
+});// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -43,7 +46,7 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("http://localhost:5173",
-                                              "https://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+                                              "https://localhost:5173").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                       });
 });
 
@@ -64,12 +67,12 @@ app.MapPost("/security/createToken",
 [AllowAnonymous] (Account user) =>
 {
     WebtruyenContext context = new WebtruyenContext();
-    Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email.Equals(user.Email) && n.Password.Equals(user.Password));
+    Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email.Equals(user.Email) && n.Password.Equals(user.Password) && n.IsActive && n.IsDelete != true);
     if (account != null)
     {
         var issuer = builder.Configuration["Jwt:Issuer"];
         var audience = builder.Configuration["Jwt:Audience"];
-        var key = Encoding.ASCII.GetBytes (builder.Configuration["Jwt:Key"]);
+        var key = Encoding.UTF8.GetBytes (builder.Configuration["Jwt:Key"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
@@ -98,6 +101,7 @@ app.MapPost("/security/createToken",
 });
 app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

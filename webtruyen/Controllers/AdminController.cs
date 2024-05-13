@@ -9,7 +9,7 @@ namespace webtruyen.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "ADMIN")]
+    [Authorize(Policy = "Admin")]
     public class AdminController : ControllerBase
     {
         private WebtruyenContext context;
@@ -55,5 +55,7 @@ namespace webtruyen.Controllers
             context.SaveChanges();
             return Ok();
         }
+
+
     }
 }
