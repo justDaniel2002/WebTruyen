@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("webtruyen")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2105e45f69247d303d1593aba241283c62f49151")]
 [assembly: System.Reflection.AssemblyProductAttribute("webtruyen")]
 [assembly: System.Reflection.AssemblyTitleAttribute("webtruyen")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

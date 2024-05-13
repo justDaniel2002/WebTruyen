@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -13,6 +13,21 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+builder.Services.AddSession(options =>
+{
+    // Thiết lập thời gian timeout cho Session (ở đây là 20 phút)
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    // Thiết lập cookie của Session là HTTP-only (chỉ có thể được truy cập bởi HTTP và không bởi JavaScript)
+    options.Cookie.HttpOnly = true;
+    // Thiết lập tên của cookie
+    options.Cookie.Name = ".YourApp.Session";
+    // Thiết lập loại lưu trữ cho Session (ở đây là In-Memory Cache)
+    options.Cookie.SameSite = SameSiteMode.None;
+});
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -28,7 +43,7 @@ builder.Services.AddAuthentication(options =>
         (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = true,
+        ValidateLifetime = false,
         ValidateIssuerSigningKey = true
     };
 });
@@ -36,7 +51,9 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "ADMIN"));
     options.AddPolicy("User", policy => policy.RequireClaim(ClaimTypes.Role, "USER"));
-});// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+});
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -45,15 +62,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:5173",
-                                              "https://localhost:5173").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                          policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                       });
 });
 
-builder.Services.AddControllersWithViews()
-    .AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+
 
 var app = builder.Build();
 
@@ -67,12 +80,12 @@ app.MapPost("/security/createToken",
 [AllowAnonymous] (Account user) =>
 {
     WebtruyenContext context = new WebtruyenContext();
-    Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email.Equals(user.Email) && n.Password.Equals(user.Password) && n.IsActive && n.IsDelete != true);
+    Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email.Equals(user.Email) && n.Password.Equals(user.Password));
     if (account != null)
     {
         var issuer = builder.Configuration["Jwt:Issuer"];
         var audience = builder.Configuration["Jwt:Audience"];
-        var key = Encoding.UTF8.GetBytes (builder.Configuration["Jwt:Key"]);
+        var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
@@ -99,11 +112,11 @@ app.MapPost("/security/createToken",
     }
     return Results.Unauthorized();
 });
+app.UseSession();
 app.UseCors(MyAllowSpecificOrigins);
-app.UseHttpsRedirection();
 app.UseRouting();
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
