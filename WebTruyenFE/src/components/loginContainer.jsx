@@ -1,16 +1,50 @@
 import { signal, useSignal } from "@preact/signals-react";
-import { login } from "../apis/service";
-import { useCookies } from 'react-cookie';
+import { getUserInfo, login } from "../apis/service";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { checkPasswordLength, validateEmail } from "../helpers/helper";
+import { useRecoilState } from "recoil";
+import { jwtATom, userInfoAtom } from "../states/atom";
 
 export const LoginContainer = () => {
-  useSignal;
-  const email = signal("email");
-  const password = signal("password");
-  const [cookies, setCookie] = useCookies(['JWT']);
+  const [email, setEmail] = useState("");
+  const [password, setPass] = useState("");
+  const [cookies, setCookie] = useCookies(["JWT"]);
+  const [JWT, setJWT] = useRecoilState(jwtATom);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const navigate = useNavigate();
 
   const Login = async () => {
-    const result = await login({ email: email.value, password: password.value });
-    setCookie(result)
+    if (!validateEmail(email)) {
+      toast.warning("Email sai cú pháp");
+      return;
+    }
+
+    if (!checkPasswordLength(password)) {
+      toast.warning("Mật khẩu phải lớn hơn hoặc bằng 6 kí tự");
+      return;
+    }
+    const result = await login({
+      email: email,
+      password: password,
+    });
+    if (result?.type != "error") {
+      getUserInfo(result).then((res) => {
+        if (res?.type == "error") {
+          setCookie(undefined);
+          setJWT(undefined);
+          setUserInfo(undefined);
+        } else {
+          setCookie(result);
+          setJWT(result);
+          setUserInfo({ ...res, username: getEmailPrefix(res.email) });
+          toast.info(`Xin chào ${getEmailPrefix(res.email)}`);
+          navigate("/");
+        }
+      });
+      
+    }
   };
 
   return (
@@ -21,9 +55,8 @@ export const LoginContainer = () => {
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Email</div>
           <input
-            value={email.value}
             onChange={(event) => {
-              email.value = event.target.value;
+              setEmail(event.target.value);
             }}
             className="w-full rounded-xl px-5 py-2 border border-black"
             placeholder="Email"
@@ -32,9 +65,8 @@ export const LoginContainer = () => {
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Password</div>
           <input
-            value={password.value}
             onChange={(event) => {
-              password.value = event.target.value;
+              setPass(event.target.value);
             }}
             className="w-full rounded-xl px-5 py-2 border border-black"
             placeholder="Password"
