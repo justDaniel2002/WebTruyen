@@ -10,6 +10,7 @@ export const SignUpContainer = () => {
   const [password, setPass] = useState("");
   const [rpassword, setRPass] = useState("");
   const navigate = useNavigate();
+
   const Register = async () => {
     if (!validateEmail(email)) {
       toast.warning("Email sai cú pháp");
@@ -41,23 +42,21 @@ export const SignUpContainer = () => {
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Email</div>
           <input
-            value={email.value}
             onChange={(event) => {
               setEmail(event.target.value);
             }}
             className="w-full rounded-xl px-5 py-2 border border-black"
-            placehoder="Email"
+            placeholder="Email"
           />
         </div>
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Password</div>
           <input
-            value={password.value}
             onChange={(event) => {
               setPass(event.target.value);
             }}
             className="w-full rounded-xl px-5 py-2 border border-black"
-            placehoder="Password"
+            placeholder="Password"
             type="password"
           />
         </div>
@@ -69,7 +68,7 @@ export const SignUpContainer = () => {
               setRPass(event.target.value);
             }}
             className="w-full rounded-xl px-5 py-2 border border-black"
-            placehoder="Password"
+            placeholder="Password"
             type="Re enter password"
           />
         </div>

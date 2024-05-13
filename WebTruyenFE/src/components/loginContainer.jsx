@@ -14,6 +14,7 @@ export const LoginContainer = () => {
   const [JWT, setJWT] = useRecoilState(jwtATom);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
+
   const Login = async () => {
     if (!validateEmail(email)) {
       toast.warning("Email sai cú pháp");
@@ -54,7 +55,6 @@ export const LoginContainer = () => {
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Email</div>
           <input
-            value={email.value}
             onChange={(event) => {
               setEmail(event.target.value);
             }}
@@ -65,7 +65,6 @@ export const LoginContainer = () => {
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Password</div>
           <input
-            value={password.value}
             onChange={(event) => {
               setPass(event.target.value);
             }}
