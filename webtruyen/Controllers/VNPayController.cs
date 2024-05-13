@@ -41,7 +41,7 @@ namespace webtruyen.Controllers
         }
         [HttpPost]
         [Route("createQR")]
-        [Authorize]
+        [Authorize(Policy = "User")]
         public IActionResult createQR([FromBody] int coin)
         {
             string returnUrl = "http://" + _httpContextAccessor.HttpContext.Request.Host + "/api/VNPay/PaymentConfirm";
