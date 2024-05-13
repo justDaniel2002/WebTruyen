@@ -6,3 +6,4 @@ export const GetHistory = "https://localhost:7226/api/Home/history"
 export const GetUserProfile = "https://localhost:7226/api/Home/userprofile"
 export const GetStoryDetail = "https://localhost:7226/api/Home/getStoryDetail/"
 export const GetChapterDetail = "https://localhost:7226/api/Home/getChapterDetail/"
+export const GetUserInfo = 'https://localhost:7226/api/Home/userprofile'

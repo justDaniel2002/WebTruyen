@@ -1,16 +1,36 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Navbar } from "../components/navbar";
 import { useRecoilState } from "recoil";
 import { useEffect, useReducer } from "react";
-import { categoriesAtom, storiesAtom } from "../states/atom";
-import { getCategory, getStories } from "../apis/service";
+import { categoriesAtom, jwtATom, storiesAtom, userInfoAtom } from "../states/atom";
+import { getCategory, getStories, getUserInfo } from "../apis/service";
+import { useCookies } from "react-cookie";
+import { getEmailPrefix } from "../helpers/helper";
 
 export const MainLayout = () => {
+  const [cookies, setCookie] = useCookies(["JWT"]);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [categories, setCate] = useRecoilState(categoriesAtom);
   const [stories, setStories] = useRecoilState(storiesAtom);
-  useEffect( () => {
+  const [JWT, setJWT] = useRecoilState(jwtATom);
+
+  const navigate = useNavigate();
+  useEffect(() => {
     getCategory().then((res) => setCate(res));
     getStories({}).then((res) => setStories(res));
+    if (cookies.JWT) {
+      getUserInfo(cookies.JWT).then((res) => {
+        if (res?.type == "error") {
+          setJWT(undefined);
+          setUserInfo(undefined);
+          navigate("/login");
+        } else {
+          setJWT(cookies.JWT);
+          setUserInfo({ ...res, username: getEmailPrefix(res.email) });
+          toast.info(`Xin chào ${getEmailPrefix(res.email)}`);
+        }
+      });
+    }
   }, []);
   return (
     <div className="bg-neutral-200 min-h-screen">

@@ -2,11 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import minilogo from "../assets/minilogowhite.png";
 import { DropdownNav } from "./dropdownNav";
 import { useRecoilState } from "recoil";
-import { categoriesAtom } from "../states/atom";
+import { categoriesAtom, userInfoAtom } from "../states/atom";
 
 export const Navbar = () => {
   const [categories, setCate] = useRecoilState(categoriesAtom);
-
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   let mapCate = [];
 
   if (categories?.length > 0) {
@@ -49,7 +49,15 @@ export const Navbar = () => {
             }} className="px-3 py-1" placeholder="Search" />
           </div>
           <div className="flex">
-            <button
+           {userInfo?<>
+           <img /> <div>{userInfo?.name}</div>
+           <button
+              
+              className="mr-3 rounded-xl py-2 px-5 bg-blue-800 hover:bg-blue-500"
+            >
+              Đăng xuất
+            </button>
+           </>:<> <button
               onClick={() => navigate("/signUp")}
               className="mr-3 rounded-xl py-2 px-5 bg-blue-800 hover:bg-blue-500"
             >
@@ -60,7 +68,7 @@ export const Navbar = () => {
               className="rounded-xl py-2 px-5 bg-blue-800 hover:bg-blue-500"
             >
               Đăng nhập
-            </button>
+            </button></>}
           </div>
         </div>
       </div>
