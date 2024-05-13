@@ -56,7 +56,6 @@ namespace webtruyen.Controllers
             string hostName = System.Net.Dns.GetHostName();
             string clientIPAddress = System.Net.Dns.GetHostAddresses(hostName).GetValue(0).ToString();
             PayLib pay = new PayLib();
-            pay.AddRequestData("user_email", email);
             pay.AddRequestData("vnp_Version", "2.1.0"); //Phiên bản api mà merchant kết nối. Phiên bản hiện tại là 2.1.0
             pay.AddRequestData("vnp_Command", "pay"); //Mã API sử dụng, mã cho giao dịch thanh toán là 'pay'
             pay.AddRequestData("vnp_TmnCode", tmnCode); //Mã website của merchant trên hệ thống của VNPAY (khi đăng ký tài khoản sẽ có trong mail VNPAY gửi về)
@@ -71,6 +70,7 @@ namespace webtruyen.Controllers
             pay.AddRequestData("vnp_ReturnUrl", returnUrl); //URL thông báo kết quả giao dịch khi Khách hàng kết thúc thanh toán
             pay.AddRequestData("vnp_TxnRef", Guid.NewGuid().ToString()); //mã hóa đơn
             string paymentUrl = pay.CreateRequestUrl(url, hashSecret);
+            HttpContext.Session.SetString("email", email);
             return Ok(GenerateQRCode(paymentUrl));
         }
 
@@ -106,7 +106,8 @@ namespace webtruyen.Controllers
                 //lấy toàn bộ dữ liệu trả về
                 var queryString = Request.QueryString.Value;
                 var json = HttpUtility.ParseQueryString(queryString);
-                string email = json["user_email"].ToString();
+                string email = HttpContext.Session.GetString("email");
+                HttpContext.Session.Clear();
                 long amount = Convert.ToInt64(json["vnp_Amount"]);
                 long orderId = Convert.ToInt64(json["vnp_TxnRef"]); //mã hóa đơn
                 string orderInfor = json["vnp_OrderInfo"].ToString(); //Thông tin giao dịch

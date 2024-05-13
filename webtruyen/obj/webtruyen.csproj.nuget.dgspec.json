@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VSCode project\\ReactJS+.Net\\WebTruyen\\webtruyen\\webtruyen.csproj": {}
+    "C:\\Users\\admin\\Desktop\\webtruyen\\webtruyen.csproj": {}
   },
   "projects": {
-    "D:\\VSCode project\\ReactJS+.Net\\WebTruyen\\webtruyen\\webtruyen.csproj": {
+    "C:\\Users\\admin\\Desktop\\webtruyen\\webtruyen.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VSCode project\\ReactJS+.Net\\WebTruyen\\webtruyen\\webtruyen.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Desktop\\webtruyen\\webtruyen.csproj",
         "projectName": "webtruyen",
-        "projectPath": "D:\\VSCode project\\ReactJS+.Net\\WebTruyen\\webtruyen\\webtruyen.csproj",
-        "packagesPath": "C:\\Users\\toden\\.nuget\\packages\\",
-        "outputPath": "D:\\VSCode project\\ReactJS+.Net\\WebTruyen\\webtruyen\\obj\\",
+        "projectPath": "C:\\Users\\admin\\Desktop\\webtruyen\\webtruyen.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\admin\\Desktop\\webtruyen\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\toden\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -45,15 +45,7 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "CloudinaryDotNet": {
-              "target": "Package",
-              "version": "[1.26.2, )"
-            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[8.0.4, )"
-            },
-            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
               "version": "[8.0.4, )"
             },
@@ -88,10 +80,6 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
-            },
-            "ZXing.Net.Bindings.Windows.Compatibility": {
-              "target": "Package",
-              "version": "[0.16.12, )"
             }
           },
           "imports": [
@@ -113,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
