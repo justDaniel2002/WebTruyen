@@ -120,7 +120,7 @@ namespace webtruyen.Controllers
         }
         [Authorize(Policy = "User")]
         [HttpPost]
-        [Route("userprofile")]
+        [Route("updateProfile")]
         public IActionResult getUserProfile([FromBody] AccountInfoDTO request)
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
@@ -142,7 +142,7 @@ namespace webtruyen.Controllers
 
         [Authorize(Policy = "User")]
         [HttpPost]
-        [Route("updateProfile")]
+        [Route("userprofile")]
         public IActionResult updateProfile()
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();

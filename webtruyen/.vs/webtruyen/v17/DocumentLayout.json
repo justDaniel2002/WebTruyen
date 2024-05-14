@@ -1,33 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\webtruyen\\",
+  "WorkspaceRootPath": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|c:\\users\\admin\\desktop\\webtruyen\\dto\\storyrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:dto\\storyrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|c:\\users\\admin\\desktop\\webtruyen\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|c:\\users\\admin\\downloads\\webtruyen\\webtruyen\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|c:\\users\\admin\\desktop\\webtruyen\\model\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:model\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\dto\\accountinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:dto\\accountinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|c:\\users\\admin\\desktop\\webtruyen\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\controllers\\vnpaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:controllers\\vnpaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|c:\\users\\admin\\desktop\\webtruyen\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.6\\build\\Container.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|c:\\users\\admin\\desktop\\webtruyen\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\dto\\storycreaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:dto\\storycreaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\dto\\storyrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:dto\\storyrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\dto\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:dto\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -37,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -49,94 +58,112 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "StoryRequest.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\webtruyen\\DTO\\StoryRequest.cs",
-              "RelativeDocumentMoniker": "DTO\\StoryRequest.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\webtruyen\\DTO\\StoryRequest.cs",
-              "RelativeToolTip": "DTO\\StoryRequest.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T03:04:34.987Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\webtruyen\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\webtruyen\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAMwBwAAAA2AAAA",
+              "Title": "AccountInfoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\DTO\\AccountInfoDTO.cs",
+              "RelativeDocumentMoniker": "DTO\\AccountInfoDTO.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\DTO\\AccountInfoDTO.cs",
+              "RelativeToolTip": "DTO\\AccountInfoDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAQAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T02:57:17.542Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-13T18:37:07.083Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Account.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\webtruyen\\Model\\Account.cs",
-              "RelativeDocumentMoniker": "Model\\Account.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\webtruyen\\Model\\Account.cs",
-              "RelativeToolTip": "Model\\Account.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAaAAAA",
+              "Title": "VNPayController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Controllers\\VNPayController.cs",
+              "RelativeDocumentMoniker": "Controllers\\VNPayController.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Controllers\\VNPayController.cs",
+              "RelativeToolTip": "Controllers\\VNPayController.cs",
+              "ViewState": "AQIAAGcAAAAAAAAAAAAkwGkAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T02:48:09.99Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-13T10:46:26.238Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAD0AAAAAAAAAAAAcwHoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-13T10:10:35.128Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "StoryCreateRequest.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\DTO\\StoryCreateRequest.cs",
+              "RelativeDocumentMoniker": "DTO\\StoryCreateRequest.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\DTO\\StoryCreateRequest.cs",
+              "RelativeToolTip": "DTO\\StoryCreateRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-13T06:10:37.973Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "StoryRequest.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\DTO\\StoryRequest.cs",
+              "RelativeDocumentMoniker": "DTO\\StoryRequest.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\DTO\\StoryRequest.cs",
+              "RelativeToolTip": "DTO\\StoryRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-13T06:10:09.188Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Container.targets",
-              "DocumentMoniker": "C:\\Users\\admin\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.6\\build\\Container.targets",
-              "RelativeDocumentMoniker": "..\\..\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.6\\build\\Container.targets",
-              "ToolTip": "C:\\Users\\admin\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.6\\build\\Container.targets",
-              "RelativeToolTip": "..\\..\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.6\\build\\Container.targets",
-              "ViewState": "AQIAAMkAAAAAAAAAAAAAwNYAAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2024-05-10T02:44:56.521Z",
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAADoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-13T06:05:49.747Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ReviewDTO.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\DTO\\ReviewDTO.cs",
+              "RelativeDocumentMoniker": "DTO\\ReviewDTO.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\DTO\\ReviewDTO.cs",
+              "RelativeToolTip": "DTO\\ReviewDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-13T06:01:37.994Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AQIAAH0AAAAAAAAAAAAUwIgAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-13T05:58:17.947Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\webtruyen\\Controllers\\AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\webtruyen\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\Controllers\\AuthController.cs",
               "RelativeToolTip": "Controllers\\AuthController.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAIA7wCUAAAAJAAAA",
+              "ViewState": "AQIAACEAAAAAAAAAAAAYwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T02:06:52.583Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\webtruyen\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\webtruyen\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAtwC8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T02:05:00.117Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\webtruyen\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\webtruyen\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAADAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-10T01:56:29.505Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-13T05:58:14.47Z"
             }
           ]
         }
