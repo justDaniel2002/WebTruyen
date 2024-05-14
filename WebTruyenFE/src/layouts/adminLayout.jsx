@@ -1,13 +1,19 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { NovelManager } from "../data/data";
 import { Dropdown } from "../components/drowdown";
 import { useRecoilState } from "recoil";
-import { categoriesAtom, storiesAtom } from "../states/atom";
+import { categoriesAtom, storiesAtom, userInfoAtom } from "../states/atom";
 import { getCategory, getStories } from "../apis/service";
 import { useEffect } from "react";
 
 export const AdminLayout = () => {
-  
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (userInfo?.role?.id != 2) {
+            navigate("/");
+          }
+    }, [])
   return (
     <>
       <div className="flex">

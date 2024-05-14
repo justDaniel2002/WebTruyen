@@ -21,6 +21,9 @@ import { ChapterDetail } from "./pages/ChapterDetail";
 import { ListStoriesOfCate } from "./pages/ListStoriesOfCate";
 import { ListSearchStories } from "./pages/ListSearchStories";
 import { ManageStories } from "./pages/Admin/ManageStories";
+import { Profile } from "./pages/Profile";
+import { MemberLayout } from "./layouts/memberLayout";
+import { CreateNovel } from "./pages/CreateNovel";
 
 function App() {
   
@@ -38,6 +41,11 @@ function App() {
           <Route path="/storiesofcate/:id" element={<ListStoriesOfCate />} />
           <Route path="/search/:search" element={<ListSearchStories />} />
 
+          <Route path="/user" element={<MemberLayout />}>
+            <Route path="profile" element={<Profile />} />
+            <Route path="createnovel" element={<CreateNovel />} />
+          </Route>
+          
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminPage />} />
             <Route path="addNovel" element={<CreateEditNovel />} />

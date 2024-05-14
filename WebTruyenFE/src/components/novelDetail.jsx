@@ -1,8 +1,32 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { jwtATom, storiesAtom } from "../states/atom";
+import { emptyAvatar } from "../data/data";
+import { CommentContainer } from "./commentContainer";
+import { useState } from "react";
+import { callAPIFEPostToken, callApiFEGet, getStories } from "../apis/service";
+import { CreateReview, GetStoryDetail } from "../apis/apis";
 
-export const NovelDetail = ({ novel }) => {
+export const NovelDetail = ({ novel, setNovel }) => {
+  const [stories, setStories] = useRecoilState(storiesAtom);
+  const [JWT, setJWT] = useRecoilState(jwtATom);
+  const [review, setReview] = useState("");
   const navigate = useNavigate();
+  const AuthorStories = stories
+    .filter((story) => story.author == novel.author)
+    .slice(0, 10);
+
+  const uploadReview = async () => {
+    callAPIFEPostToken(JWT, CreateReview, {
+      content: review,
+      storyID: novel.id,
+    }).then(() => {
+      callApiFEGet(GetStoryDetail, novel.id).then((response) =>
+        setNovel(response)
+      );
+    });
+  };
   return (
     <>
       <div className="px-20 py-5 flex">
@@ -55,23 +79,28 @@ export const NovelDetail = ({ novel }) => {
             DANH SÁCH CHƯƠNG
           </div>
           <div className="flex mb-5">
-            <div className="w-1/2 cursor-pointer ">
+            <div className="w-1/2 cursor-pointer pr-5">
               {novel?.chapers?.slice(0, 50)?.map((c) => {
-                return (
-                  <div
-                    key={c.id}
-                    onClick={() => navigate(`/chapter/${novel.id}/${c.id}`)}
-                    className="text-medium hover:underline"
-                  >
-                    * Chương {c.order}: {c.name}
-                  </div>
-                );
+                if(c.status){
+                  return <div
+                  key={c.id}
+                  onClick={() => navigate(`/chapter/${novel.id}/${c.id}`)}
+                  className="text-medium hover:underline"
+                >
+                  * Chương {c.order}: {c.name}
+                </div>
+                }else{
+                  return <div
+                  key={c.id}
+                  
+                  className="flex items-center justify-between text-medium hover:underline"
+                >
+                  <span>* Chương {c.order}: {c.name}</span> <span className="flex items-center"><Icon icon="material-symbols:lock" className="mr-2" /> Khóa</span>
+                </div>
+                }
               })}
             </div>
             <div className="w-1/2"></div>
-          </div>
-          <div className="underline text-2xl font-serif underline-offset-8 mb-10">
-            BÌNH LUẬN TRUYỆN
           </div>
         </div>
 
@@ -79,8 +108,61 @@ export const NovelDetail = ({ novel }) => {
           <div className="underline text-lg font-serif underline-offset-8 mb-5">
             TRUYỆN CÙNG TÁC GIẢ
           </div>
-          <hr className="my-5 w-full" />
+          <hr className="my-5 w-full border-neutral-400" />
+          {AuthorStories.map((s) => (
+            <>
+              <div className="w-full flex items-center">
+                <div
+                  onClick={() => navigate(`/noveldetail/${s.id}`)}
+                  className="w-1/3 flex justify-between"
+                >
+                  <img src={s?.image} className="object-fill" />
+                </div>
+                <div className="w-2/3 px-5">
+                  <div
+                    className="flex font-bold items-center text-neutral-600 text-2xl hover:underline mb-2"
+                    onClick={() => navigate(`/noveldetail/${s.id}`)}
+                  >
+                    <Icon icon="foundation:page-multiple" className="mr-2" />{" "}
+                    {s?.title}
+                  </div>
+                  <div className="text-thin italic flex items-center">
+                    <Icon icon="material-symbols:edit" className="mr-2" />{" "}
+                    {s?.author}
+                  </div>
+                </div>
+              </div>
+              <hr className="my-5 w-full border-neutral-400" />
+            </>
+          ))}
         </div>
+      </div>
+
+      <div className="px-20">
+        <div className="underline text-2xl font-serif underline-offset-8 mb-2">
+          BÌNH LUẬN TRUYỆN
+        </div>
+        <div className="font-semibold mb-10">
+          {novel?.reviews?.length ?? 0} bình luận
+        </div>
+        {JWT ? (
+          <>
+            <div className="flex mb-10">
+              <img className="rounded-full h-12 w-12 mr-3" src={emptyAvatar} />
+              <textarea
+                className="w-11/12 h-20 p-5"
+                onChange={(event) => setReview(event.target.value)}
+                value={review}
+              ></textarea>
+            </div>
+            <div className="flex justify-end" onClick={uploadReview}>
+              <button className="px-5 py-3 bg-blue-800 text-white">Đăng</button>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+        <CommentContainer comment={novel?.reviews} />
       </div>
     </>
   );

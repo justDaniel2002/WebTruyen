@@ -31,7 +31,8 @@ namespace webtruyen.Controllers
             }
             else
             {
-                account.Role = context.Roles.ToList()[1];
+                account.Role = context.Roles.ToList()[0];
+                account.IsActive = true;
                 account.CreatedDate = DateTime.Now;
                 account.ModifiedDate = DateTime.Now;
                 context.Accounts.Add(account);

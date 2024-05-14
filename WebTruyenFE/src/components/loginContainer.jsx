@@ -3,9 +3,10 @@ import { getUserInfo, login } from "../apis/service";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { checkPasswordLength, validateEmail } from "../helpers/helper";
+import { checkPasswordLength, getEmailPrefix, validateEmail } from "../helpers/helper";
 import { useRecoilState } from "recoil";
 import { jwtATom, userInfoAtom } from "../states/atom";
+import { toast } from "react-toastify";
 
 export const LoginContainer = () => {
   const [email, setEmail] = useState("");
@@ -32,11 +33,11 @@ export const LoginContainer = () => {
     if (result?.type != "error") {
       getUserInfo(result).then((res) => {
         if (res?.type == "error") {
-          setCookie(undefined);
+          setCookie('JWT', undefined);
           setJWT(undefined);
           setUserInfo(undefined);
         } else {
-          setCookie(result);
+          setCookie('JWT', result);
           setJWT(result);
           setUserInfo({ ...res, username: getEmailPrefix(res.email) });
           toast.info(`Xin chào ${getEmailPrefix(res.email)}`);

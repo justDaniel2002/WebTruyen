@@ -14,6 +14,6 @@ export const Detail = () => {
     },[])
 
     return <>
-    <NovelDetail novel={novelDetail}/>
+    <NovelDetail novel={novelDetail} setNovel={setDetail}/>
     </>
 }

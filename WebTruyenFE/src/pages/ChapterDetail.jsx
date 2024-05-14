@@ -43,11 +43,13 @@ export const ChapterDetail = () => {
             value={chapter?.id}
             className="bg-lime-600 py-3 px-5 overflow-hidden text-white"
           >
-            {novel?.chapers?.map((c) => (
-              <option key={c.id} value={c.id}>
+            {novel?.chapers?.map((c) => {
+              if(c.status){
+                <option key={c.id} value={c.id}>
                 Chương {c.order}: {c.name}
               </option>
-            ))}
+              }
+            })}
           </select>
           {/* <div className="px-5 py-3  bg-lime-500 text-white ml-2 text-xl">
             Chương Sau

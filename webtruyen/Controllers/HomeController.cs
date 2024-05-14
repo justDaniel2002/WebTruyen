@@ -131,7 +131,7 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.FirstOrDefault(n => n.Email == email);
+            Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email == email);
             return Ok(account);
         }
         [Authorize(Policy = "User")]
@@ -220,12 +220,13 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
-            Review review = new Review()
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            Review review = new Review
             {
                 Content = reviewDTO.content,
                 CreatedDate = DateTime.Now,
-                Story = context.Stories.FirstOrDefault(n => n.Id == reviewDTO.storyID)
+                UserId = account.Id,
+                StoryId = reviewDTO.storyID
             };
             context.Add(review);
             context.SaveChanges();

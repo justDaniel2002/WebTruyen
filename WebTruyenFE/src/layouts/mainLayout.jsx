@@ -6,6 +6,7 @@ import { categoriesAtom, jwtATom, storiesAtom, userInfoAtom } from "../states/at
 import { getCategory, getStories, getUserInfo } from "../apis/service";
 import { useCookies } from "react-cookie";
 import { getEmailPrefix } from "../helpers/helper";
+import { toast } from "react-toastify";
 
 export const MainLayout = () => {
   const [cookies, setCookie] = useCookies(["JWT"]);
@@ -27,7 +28,6 @@ export const MainLayout = () => {
         } else {
           setJWT(cookies.JWT);
           setUserInfo({ ...res, username: getEmailPrefix(res.email) });
-          toast.info(`Xin chào ${getEmailPrefix(res.email)}`);
         }
       });
     }
