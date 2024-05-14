@@ -86,37 +86,46 @@ namespace webtruyen.Controllers
         public IActionResult getChapterDetailByID(int id)
         {
             Chaper chaper = context.Chapers.FirstOrDefault(n => n.Id == id);
-            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
-            var token = authHeader.Substring("Bearer ".Length).Trim();
-
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(token);
-
-            // Lấy thông tin từ JWT
-            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
-            if (chaper != null )
+            if (chaper != null)
             {
-                if(chaper.Status == false)
+                if (chaper.Status == true)
                 {
                     return Ok(chaper);
                 }
                 else
                 {
-                    if (account != null && account.Chapters.Contains(chaper))
+                    var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+                    if(authHeader != null)
                     {
-                        return Ok(chaper);
-                    }
+                        var token = authHeader.Substring("Bearer ".Length).Trim();
+
+                        var handler = new JwtSecurityTokenHandler();
+                        var jwtToken = handler.ReadJwtToken(token);
+
+                        // Lấy thông tin từ JWT
+                        var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+                        Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+                        if (account != null && account.Chapters.Contains(chaper))
+                        {
+                            return Ok(chaper);
+                        }
+                        else
+                        {
+                            return BadRequest("Bạn cần unlock để đọc trang truyện này");
+                        }
+                    }                  
                     else
                     {
-                        return BadRequest("Bạn cần unlock để đọc trang truyện này");
-                    }                
+                        return Unauthorized();
+                    }
                 }
             }
             else
             {
                 return NotFound();
             }
+            
+            
         }
         [Authorize(Policy = "User")]
         [HttpPost]

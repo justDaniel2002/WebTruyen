@@ -9,11 +9,12 @@ export const CreateEditNovel = (novel = undefined) => {
   const [editNovel, setNovel] = useState(novel);
   const [chapterModal, setChapterModal] = useState(false);
   const [categories, setCate] = useRecoilState(categoriesAtom);
+  const [editChapter, setEditChapter] = useState();
 
   const UploadTruyen = () => {
-    const image = document.getElementById('image').value
-    console.log(image)
-  }
+    const image = document.getElementById("image").value;
+    console.log(image);
+  };
   return (
     <>
       <div className="py-20 px-20 text-xl">
@@ -80,6 +81,41 @@ export const CreateEditNovel = (novel = undefined) => {
             <Icon icon="icons8:plus" className="ml-1 text-2xl" />
           </span>
         </div>
+
+        <div className="flex mb-5">
+          <div className="w-1/2 cursor-pointer pr-5">
+            {editNovel?.chapers?.slice(0, 50)?.map((c) => {
+              if (c.status) {
+                return (
+                  <div
+                    key={c.id}
+                    onClick={() => navigate(`/chapter/${novel.id}/${c.id}`)}
+                    className="text-medium hover:underline"
+                  >
+                    * Chương {c.order}: {c.name}
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    key={c.id}
+                    className="flex items-center justify-between text-medium hover:underline"
+                  >
+                    <span>
+                      * Chương {c.order}: {c.name}
+                    </span>{" "}
+                    <span className="flex items-center">
+                      <Icon icon="material-symbols:lock" className="mr-2" />{" "}
+                      Khóa
+                    </span>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div className="w-1/2"></div>
+        </div>
+
         <div onClick={UploadTruyen} className="flex justify-end">
           <button className="py-2 px-5 bg-blue-900 text-white hover:bg-blue-700 text-base">
             {novel ? "Cập Nhập" : "Đăng"}
@@ -89,7 +125,7 @@ export const CreateEditNovel = (novel = undefined) => {
 
       <ReactModal
         isOpen={chapterModal}
-        className="w-1/2 m-auto px-10 py-5 bg-neutral-800 text-white text-xl"
+        className="w-1/2 m-auto px-10 py-5 bg-neutral-800 text-white text-xl overflow-y-scroll max-h-screen"
         contentLabel="Nội dung chương"
       >
         <div>
@@ -106,6 +142,11 @@ export const CreateEditNovel = (novel = undefined) => {
           <div className="my-5">
             <div className="mb-5">Nội Dung</div>
             <RTEditor />
+          </div>
+          <div className="flex justify-end">
+            <button className="py-2 px-5 bg-blue-800 mt-3 text-white">
+              Đăng
+            </button>
           </div>
         </div>
       </ReactModal>

@@ -9,3 +9,5 @@ export const GetChapterDetail = "http://localhost:5065/api/Home/getChapterDetail
 export const GetUserInfo = 'http://localhost:5065/api/Home/userprofile'
 export const CreateReview = 'http://localhost:5065/api/Home/createReview'
 export const CreateQR = 'http://localhost:5065/api/VNPay/createQR'
+export const UpdateUserInfo = 'http://localhost:5065/api/Home/updateProfile'
+export const UnlockChapter = "http://localhost:5065/api/Home/unlockChapters"

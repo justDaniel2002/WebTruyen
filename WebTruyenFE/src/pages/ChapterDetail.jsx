@@ -1,21 +1,26 @@
 import { signal, useSignal } from "@preact/signals-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { callApiFEGet, callApiFEPost } from "../apis/service";
+import { callAPIFEGetToken, callApiFEGet, callApiFEPost, getChapterDetail } from "../apis/service";
 import { GetChapterDetail, GetStories, GetStoryDetail } from "../apis/apis";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useRecoilState } from "recoil";
+import { jwtATom } from "../states/atom";
 
 export const ChapterDetail = () => {
   const [chapter, setChap] = useState();
   const [novel, setNol] = useState();
+  const [JWT, setJWT] = useRecoilState(jwtATom);
   const params = useParams();
   useEffect(() => {
-    callApiFEGet(GetChapterDetail, params.id).then((res) => setChap(res));
     callApiFEGet(GetStoryDetail, params.nid).then((res) => setNol(res));
+    getChapterDetail(params.id, JWT).then((res) => setChap(res))
+    
+    
   }, []);
 
   const changeChapter = async (id) => {
-    callApiFEGet(GetChapterDetail, id).then((res) => setChap(res));
+    getChapterDetail(id, JWT).then((res) => setChap(res))
   };
   return (
     <>
@@ -40,15 +45,13 @@ export const ChapterDetail = () => {
             onChange={(event) => {
               changeChapter(event.target.value);
             }}
-            value={chapter?.id}
+            defaultValue={chapter?.id}
             className="bg-lime-600 py-3 px-5 overflow-hidden text-white"
           >
             {novel?.chapers?.map((c) => {
-              if(c.status){
-                <option key={c.id} value={c.id}>
-                Chương {c.order}: {c.name}
-              </option>
-              }
+              return <option key={c.id} value={c.id}>
+              Chương {c.order}: {c.name}
+            </option>
             })}
           </select>
           {/* <div className="px-5 py-3  bg-lime-500 text-white ml-2 text-xl">

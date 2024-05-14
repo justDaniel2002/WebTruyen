@@ -25,6 +25,7 @@ export const Navbar = () => {
     removeCookie("JWT");
     setJWT(undefined);
     setUserInfo(undefined);
+    navigate("/")
   };
   return (
     <div className=" bg-blue-950 text-white">

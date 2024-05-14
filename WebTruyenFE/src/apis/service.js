@@ -3,8 +3,10 @@ import {
   AuthLogin,
   AuthRegister,
   GetCategories,
+  GetChapterDetail,
   GetStories,
   GetUserInfo,
+  UnlockChapter,
 } from "./apis";
 import { toast } from "react-toastify";
 
@@ -45,6 +47,41 @@ export const getStories = async (data) => {
   return res.data;
 };
 
+export const getChapterDetail = async (params = "", token = undefined) => {
+  try {
+    if (token) {
+      const res = await axios.get(GetChapterDetail + params, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.get(GetChapterDetail + params);
+      return res.data;
+    }
+  } catch (error) {
+    toast.error("Bạn chưa trả xu để coi chương này");
+    return {
+      error: error.message,
+      type: "error",
+    };
+  }
+};
+
+export const unlockChapter = async (data, token) => {
+  try {
+    await axios.post(UnlockChapter, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch (error) {
+    toast.error(error.message)
+  }
+};
 export const callApiFEGet = async (URL, params = "") => {
   const res = await axios.get(URL + params);
   return res.data;
@@ -81,6 +118,24 @@ export const callAPIFEPostToken = async (token, url, data) => {
   }
 };
 
+export const callAPIFEGetToken = async (token, url, params = "") => {
+  try {
+    const res = await axios.get(url + params, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    toast.error(error.message);
+    return {
+      error,
+      type: "error",
+    };
+  }
+};
+
 export const getUserInfo = async (token) => {
   // try {
   //   const res = await axios.post(GetUserInfo, {
@@ -102,7 +157,7 @@ export const getUserInfo = async (token) => {
   const options = {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   };
