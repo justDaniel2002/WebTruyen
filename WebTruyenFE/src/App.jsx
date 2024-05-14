@@ -24,6 +24,7 @@ import { Profile } from "./pages/Profile";
 import { MemberLayout } from "./layouts/memberLayout";
 import { CreateNovel } from "./pages/CreateNovel";
 import { CreateEditNovel } from "./components/CreateEditNovel";
+import { EditNovel } from "./pages/EditNovel";
 
 function App() {
   
@@ -44,6 +45,7 @@ function App() {
           <Route path="/user" element={<MemberLayout />}>
             <Route path="profile" element={<Profile />} />
             <Route path="createnovel" element={<CreateNovel />} />
+            <Route path="editNovel/:id" element={<EditNovel />} />
           </Route>
           
           <Route path="/admin" element={<AdminLayout />}>

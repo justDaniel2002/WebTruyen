@@ -2,6 +2,7 @@
 {
     public class ChapterDTO
     {
+        public long? id { get; set; }
         public string content { get; set; }
         public string name { get; set; }
         public long storyID { get; set; }

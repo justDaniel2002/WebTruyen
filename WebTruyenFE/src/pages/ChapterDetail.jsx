@@ -57,8 +57,10 @@ export const ChapterDetail = () => {
           {/* <div className="px-5 py-3  bg-lime-500 text-white ml-2 text-xl">
             Chương Sau
           </div> */}
+          
         </div>
-        <p className="mt-40">{chapter?.content}</p>
+        <div className="mt-40" dangerouslySetInnerHTML={{ __html: chapter?.content }} />
+        {/* <p className="mt-40">{chapter?.content}</p> */}
       </div>
     </>
   );

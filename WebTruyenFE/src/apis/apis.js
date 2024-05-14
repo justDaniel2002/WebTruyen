@@ -11,3 +11,7 @@ export const CreateReview = 'http://localhost:5065/api/Home/createReview'
 export const CreateQR = 'http://localhost:5065/api/VNPay/createQR'
 export const UpdateUserInfo = 'http://localhost:5065/api/Home/updateProfile'
 export const UnlockChapter = "http://localhost:5065/api/Home/unlockChapters"
+export const AddStory = "http://localhost:5065/api/Home/addStory"
+export const AddChapter = "http://localhost:5065/api/Home/addChapter"
+export const EditStory = "http://localhost:5065/api/Home/editStory"
+export const EditChapter = "http://localhost:5065/api/Home/editChapter"

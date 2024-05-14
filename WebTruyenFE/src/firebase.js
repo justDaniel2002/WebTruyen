@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getDownloadURL, getStorage, ref, uploadBytes, uploadString } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,36 +13,29 @@ const firebaseConfig = {
   storageBucket: "webtruyen-e46cc.appspot.com",
   messagingSenderId: "1074844049689",
   appId: "1:1074844049689:web:dbd55553d9b244740da588",
-  measurementId: "G-X8RL4B1MNC"
+  measurementId: "G-X8RL4B1MNC",
 };
 
 // Initialize Firebase
-let firebaseApp;
-
-if (!getApps().length) {
-	firebaseApp = initializeApp(firebaseConfig);
-}
-
-const storage = getStorage();
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
+export const storage = getStorage(app);
 
 export async function uploadImage(image) {
-	const imageStorageRef = ref(storage, `images/${image.path}`);
-	await uploadBytes(imageStorageRef, image).then((snapshot) => {
-		console.log('Uploaded a blob or file!');
-		console.log(snapshot);
-	});
+  const imageRef = ref(storage, `images/${image.name}`)
+  await uploadBytes(imageRef,image)
 }
 
 export async function getURL(imagePath) {
-	let URL = '';
-	await getDownloadURL(ref(storage, `images/${imagePath}`))
-		.then((url) => {
-			console.log(url);
-			URL = url;
-		})
-		.catch((error) => {
-			// Handle any errors
-			console.log(error);
-		});
-	return URL;
+  let URL = "";
+  await getDownloadURL(ref(storage, `images/${imagePath}`))
+    .then((url) => {
+      console.log(url);
+      URL = url;
+    })
+    .catch((error) => {
+      // Handle any errors
+      console.log(error);
+    });
+  return URL;
 }

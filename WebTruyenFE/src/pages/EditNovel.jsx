@@ -1,52 +1,63 @@
 import ReactModal from "react-modal";
 import { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { RTEditor } from "./richTextEditor";
 import { useRecoilState } from "recoil";
 import { categoriesAtom, jwtATom } from "../states/atom";
 import { getURL, uploadImage } from "../firebase";
 import { toast } from "react-toastify";
-import { callAPIFEPostToken, callApiFEPost } from "../apis/service";
-import { AddChapter, AddStory } from "../apis/apis";
-import { useNavigate } from "react-router-dom";
+import {
+  callAPIFEPostToken,
+  callApiFEGet,
+  callApiFEPost,
+} from "../apis/service";
+import {
+  AddChapter,
+  AddStory,
+  EditChapter,
+  EditStory,
+  GetStoryDetail,
+} from "../apis/apis";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { RTEditor } from "../components/richTextEditor";
 
-export const CreateEditNovel = ({ novel = undefined }) => {
-  const [editNovel, setNovel] = useState(novel);
+export const EditNovel = () => {
+  const [editNovel, setNovel] = useState();
   const [chapterModal, setChapterModal] = useState(false);
   const [udchapterModal, setudChapterModal] = useState(false);
   const [categories, setCate] = useRecoilState(categoriesAtom);
   const [editChapter, setEditChapter] = useState();
-  const [addChapter, setAddChapter] = useState({storyID: novel?.id});
+  const [addChapter, setAddChapter] = useState();
   const [JWT, setJWT] = useRecoilState(jwtATom);
   const navigate = useNavigate();
 
   const [chapters, setChap] = useState([]);
 
-  
-  useEffect(() => {
-    if (novel) {
-      const chapter = editNovel?.chapers?.map((c) => {
-        return {
-          content: c.content,
-          name: c.name,
-          storyID: c.storyID,
-          order: c.order,
-        };
+  const params = useParams();
+  const setUp = async () => {
+    callApiFEGet(GetStoryDetail, params.id).then((res) => {
+        setNovel(res);
+        const chapter = res?.chapers?.map((c) => {
+          return {
+            id: c.id,
+            content: c.content,
+            name: c.name,
+            storyID: c.storyID,
+            order: c.order,
+          };
+        });
+        setChap(chapter);
+        setAddChapter({ storyID: editNovel.id, title: "", order: 1, name: "" });
       });
-      setChap(chapter);
-    }
+  }
+  useEffect(() => {
+    setUp()
   }, []);
 
-  const UploadTruyen = async () => {
+  const UpdateTruyen = async () => {
     const image = document.getElementById("image").files[0];
     if (editNovel.title == undefined || editNovel.title.trim() == "") {
       toast.warning("Tên Truyện Trống");
-      return;
-    }
-
-    if (image == undefined) {
-      toast.warning("Ảnh Truyện Trống");
       return;
     }
 
@@ -62,24 +73,43 @@ export const CreateEditNovel = ({ novel = undefined }) => {
       toast.warning("Mô Tả Trống");
       return;
     }
-    await uploadImage(image);
-    const imgURL = await getURL(image.name);
-    const res = await callAPIFEPostToken(JWT, AddStory, {
+
+    if (image) {
+      await uploadImage(image);
+      editNovel.image = await getURL(image.name);
+    }
+
+    const res = await callAPIFEPostToken(JWT, EditStory, {
+      id: editNovel?.id,
       title: editNovel?.title,
       description: editNovel?.description,
       categoryId: editNovel?.categoryId,
-      image: imgURL,
+      image: editNovel?.image,
+      author: editNovel?.author,
     });
     if (res?.type != "error") {
-      toast.success("Đăng Truyện Thành Công");
-      navigate(`/editNovel/${res.id}`);
+      toast.success("Cập Nhập Truyện Thành Công");
     }
   };
 
   const UploadChapter = async () => {
+    callAPIFEPostToken(JWT, AddChapter, addChapter).then((res) => {
+      if (res.type != "error") {
+        toast.success("Đăng Chương Thành Công");
+        setUp()
+      }
+    });
+    
+  };
+
+  const UpdateChapter = async () => {
     setChap([...chapters, addChapter]);
-    callAPIFEPostToken(JWT, AddChapter, addChapter);
-    setAddChapter({storyID: novel.id})
+    callAPIFEPostToken(JWT, EditChapter, editChapter).then((res) => {
+      if (res.type != "error") {
+        toast.success("Cập Nhập Chương Thành Công");
+        setUp()
+      }
+    });
   };
   return (
     <>
@@ -101,7 +131,7 @@ export const CreateEditNovel = ({ novel = undefined }) => {
             className="rounded-lg p-3 border-2 w-1/3"
             id="image"
           />
-          {novel?<img src={novel?.image} />:""}
+          <img src={editNovel?.image} />
         </div>
         <div className="my-5">
           <div className="mb-5">Thể Loại</div>
@@ -145,34 +175,33 @@ export const CreateEditNovel = ({ novel = undefined }) => {
               setChapterModal(true);
             }}
           >
-            {novel ? <Icon icon="icons8:plus" className="ml-1 text-2xl" /> : ""}
+            <Icon icon="icons8:plus" className="ml-1 text-2xl" />
           </span>
         </div>
 
         <div className="flex mb-5">
-          {novel ? (
-            <div className="w-1/2 cursor-pointer pr-5">
-              {chapters?.slice(0, 50)?.map((c) => {
-                return (
-                  <div
-                    key={c.id}
-                    onClick={() => {setEditChapter(c); setudChapterModal(true)}}
-                    className="text-medium hover:underline"
-                  >
-                    * Chương {c.order}: {c.name}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            ""
-          )}
+          <div className="w-1/2 cursor-pointer pr-5">
+            {chapters?.slice(0, 50)?.map((c) => {
+              return (
+                <div
+                  key={c.id}
+                  onClick={() => {
+                    setEditChapter(c);
+                    setudChapterModal(true);
+                  }}
+                  className="text-medium hover:underline"
+                >
+                  * Chương {c.order}: {c.name}
+                </div>
+              );
+            })}
+          </div>
           <div className="w-1/2"></div>
         </div>
 
-        <div onClick={UploadTruyen} className="flex justify-end">
+        <div onClick={UpdateTruyen} className="flex justify-end">
           <button className="py-2 px-5 bg-blue-900 text-white hover:bg-blue-700 text-base">
-            {novel ? "Cập Nhập" : "Đăng"}
+            Cập Nhập
           </button>
         </div>
       </div>
@@ -193,7 +222,9 @@ export const CreateEditNovel = ({ novel = undefined }) => {
             <div className="mb-5">Tên Chương</div>
             <input
               value={addChapter?.name}
-              onChange={(event) => setAddChapter({...addChapter, name: event.target.value})}
+              onChange={(event) =>
+                setAddChapter({ ...addChapter, name: event.target.value })
+              }
               className="rounded-lg p-3 border-2 w-1/3 text-black"
             />
           </div>
@@ -202,7 +233,9 @@ export const CreateEditNovel = ({ novel = undefined }) => {
             <input
               type="number"
               value={addChapter?.order}
-              onChange={(event) => setAddChapter({...addChapter, order: event.target.value})}
+              onChange={(event) =>
+                setAddChapter({ ...addChapter, order: event.target.value })
+              }
               className="rounded-lg p-3 border-2 w-1/3 text-black"
             />
           </div>
@@ -210,10 +243,21 @@ export const CreateEditNovel = ({ novel = undefined }) => {
             <div id="coc" className="mb-5">
               Nội Dung
             </div>
-            <RTEditor content={addChapter?.content} onChange={(value) => setAddChapter({...addChapter, content:value})}/>
+            <RTEditor
+              content={addChapter?.content}
+              onChange={(event) =>
+                setAddChapter({
+                  ...addChapter,
+                  content: event.target.getContent(),
+                })
+              }
+            />
           </div>
           <div className="flex justify-end">
-            <button onClick={UploadChapter} className="py-2 px-5 bg-blue-800 mt-3 text-white">
+            <button
+              onClick={UploadChapter}
+              className="py-2 px-5 bg-blue-800 mt-3 text-white"
+            >
               Đăng
             </button>
           </div>
@@ -236,7 +280,9 @@ export const CreateEditNovel = ({ novel = undefined }) => {
             <div className="mb-5">Tên Chương</div>
             <input
               value={editChapter?.name}
-              onChange={(event) => setEditChapter({...editChapter, name: event.target.value})}
+              onChange={(event) =>
+                setEditChapter({ ...editChapter, name: event.target.value })
+              }
               className="rounded-lg p-3 border-2 w-1/3 text-black"
             />
           </div>
@@ -245,7 +291,9 @@ export const CreateEditNovel = ({ novel = undefined }) => {
             <input
               type="number"
               value={editChapter?.order}
-              onChange={(event) => setEditChapter({...editChapter, order: event.target.value})}
+              onChange={(event) =>
+                setEditChapter({ ...editChapter, order: event.target.value })
+              }
               className="rounded-lg p-3 border-2 w-1/3 text-black"
             />
           </div>
@@ -253,10 +301,21 @@ export const CreateEditNovel = ({ novel = undefined }) => {
             <div id="coc" className="mb-5">
               Nội Dung
             </div>
-            <RTEditor content={editChapter?.content} onChange={(value) => setAddChapter({...editChapter, content:value})}/>
+            <RTEditor
+              content={editChapter?.content}
+              onChange={(event) =>
+                setAddChapter({
+                  ...editChapter,
+                  content: event.target.getContent(),
+                })
+              }
+            />
           </div>
           <div className="flex justify-end">
-            <button onClick={UploadChapter} className="py-2 px-5 bg-blue-800 mt-3 text-white">
+            <button
+              onClick={UpdateChapter}
+              className="py-2 px-5 bg-blue-800 mt-3 text-white"
+            >
               Cập Nhập
             </button>
           </div>

@@ -78,8 +78,9 @@ export const unlockChapter = async (data, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    toast.success("Thanh toán thành công")
   } catch (error) {
-    toast.error(error.message)
+    toast.error("Không đủ xu để mua chương, hãy nạp thêm")
   }
 };
 export const callApiFEGet = async (URL, params = "") => {

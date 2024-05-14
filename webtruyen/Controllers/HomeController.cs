@@ -269,7 +269,7 @@ namespace webtruyen.Controllers
 
         [HttpPost]
         [Route("addStory")]
-        [Authorize(Policy = "User,Admin")]
+        [Authorize(Policy = "UserOrAdmin")]
         public IActionResult createStory([FromBody] StoryCreateRequest request)
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
@@ -280,25 +280,53 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
-            Story story = new Story()
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            Story story = new Story
             {
                 Title = request.title,
                 Description = request.description,
-                Category = context.Categories.FirstOrDefault(n => n.Id == request.categoryID),
                 CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now,
                 IsActive = true,
                 Status = "Hot",
-                Image = Helper.UploadPhoto(request.image.OpenReadStream())
+                Image = request.image,
+                CategoryId = request.categoryID,
+                Author = request.author
             };
             context.Add(story);
             context.SaveChanges();
-            return Ok("Create Story Successfully!");
+            return Ok(story);
+        }
+
+        [HttpPost]
+        [Route("editStory")]
+        [Authorize(Policy = "UserOrAdmin")]
+        public IActionResult editStory([FromBody] StoryCreateRequest request)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            Story story = context.Stories.FirstOrDefault(n => n.Id == request.id);
+            story.Title = request.title;
+            story.Description = request.description;
+            story.ModifiedDate = DateTime.Now;
+            story.Image = request.image;
+            story.CategoryId = request.categoryID;
+            story.Author = request.author;
+
+            context.SaveChanges();
+            return Ok(story);
         }
 
         [HttpPost]
         [Route("addChapter")]
-        [Authorize(Policy = "User,Admin")]
+        [Authorize(Policy = "UserOrAdmin")]
         public IActionResult createChapter([FromBody] ChapterDTO request)
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
@@ -309,18 +337,64 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
-            Chaper chapter = new Chaper()
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            Chaper chapter = new Chaper
             {
                 Content = request.content,
                 Name = request.name,
                 Order = request.order,
                 Status = true,
-                Story = context.Stories.FirstOrDefault(n => n.Id == request.storyID)
+                Story = context.Stories.FirstOrDefault(n => n.Id == request.storyID),
+                StoryId = request.storyID
             };
             context.Add(chapter);
             context.SaveChanges();
             return Ok("Create Chapter Successfully!");
+        }
+
+        [HttpPost]
+        [Route("editChapter")]
+        [Authorize(Policy = "UserOrAdmin")]
+        public IActionResult editChapter([FromBody] ChapterDTO request)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            Chaper chapter = context.Chapers.FirstOrDefault(n => n.Id == request.id);
+
+            chapter.Content = request.content;
+            chapter.Name = request.name;
+            chapter.Order = request.order;
+            
+            context.SaveChanges();
+            return Ok("Edit Chapter Successfully!");
+        }
+
+        [HttpDelete]
+        [Route("deleteChapter/{id}")]
+        [Authorize(Policy = "UserOrAdmin")]
+        public IActionResult deleteChapter(int id)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            Chaper chapter = context.Chapers.FirstOrDefault(n => n.Id == id);
+
+            context.Chapers.Remove(chapter);
+            context.SaveChanges();
+            return Ok("Remove Chapter Successfully!");
         }
 
 

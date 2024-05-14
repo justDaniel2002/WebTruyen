@@ -1,11 +1,11 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-export const RTEditor = (content = "") => {
+export const RTEditor = ({content = "", onChange = () => {}}) => {
   return (
     <Editor
       apiKey="rxzla8t3gi19lqs86mqzx01taekkxyk5yyaavvy8rwz0wi83"
       initialValue={content}
-      onChange={(v) => content = v}
+      onChange={onChange}
       init={{
         height: 500,
         menubar: false,
