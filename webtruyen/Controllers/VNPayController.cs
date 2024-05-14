@@ -107,6 +107,7 @@ namespace webtruyen.Controllers
                 var queryString = Request.QueryString.Value;
                 var json = HttpUtility.ParseQueryString(queryString);
                 string email = HttpContext.Session.GetString("email");
+                HttpContext.Session.Clear();
                 long amount = Convert.ToInt64(json["vnp_Amount"]);
                 long orderId = Convert.ToInt64(json["vnp_TxnRef"]); //mã hóa đơn
                 string orderInfor = json["vnp_OrderInfo"].ToString(); //Thông tin giao dịch

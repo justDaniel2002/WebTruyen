@@ -121,7 +121,29 @@ namespace webtruyen.Controllers
         [Authorize(Policy = "User")]
         [HttpPost]
         [Route("userprofile")]
-        public IActionResult getUserProfile()
+        public IActionResult getUserProfile([FromBody] AccountInfoDTO request)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Email == email);
+            account.Address = request.address;
+            account.Phone = request.phone;
+            account.Password = request.password;
+            account.ModifiedDate = DateTime.Now;
+            context.SaveChanges();
+            return Ok(account);
+        }
+
+        [Authorize(Policy = "User")]
+        [HttpPost]
+        [Route("updateProfile")]
+        public IActionResult updateProfile()
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
             var token = authHeader.Substring("Bearer ".Length).Trim();
@@ -134,6 +156,7 @@ namespace webtruyen.Controllers
             Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email == email);
             return Ok(account);
         }
+
         [Authorize(Policy = "User")]
         [HttpGet]
         [Route("history")] 
