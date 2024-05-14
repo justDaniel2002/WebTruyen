@@ -11,7 +11,6 @@ import { MainLayout } from "./layouts/mainLayout";
 import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { AdminPage } from "./pages/Admin/AdminPage";
-import { CreateEditNovel } from "./pages/Admin/CreateEditNovel";
 import { AdminLayout } from "./layouts/adminLayout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,6 +23,7 @@ import { ManageStories } from "./pages/Admin/ManageStories";
 import { Profile } from "./pages/Profile";
 import { MemberLayout } from "./layouts/memberLayout";
 import { CreateNovel } from "./pages/CreateNovel";
+import { CreateEditNovel } from "./components/CreateEditNovel";
 
 function App() {
   

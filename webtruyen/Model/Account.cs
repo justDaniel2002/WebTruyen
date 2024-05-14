@@ -33,7 +33,7 @@ public partial class Account
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
-    public virtual Role Role { get; set; } = null!;
+    public virtual Role? Role { get; set; } = null!;
 
     public virtual ICollection<Chaper> Chapters { get; set; } = new List<Chaper>();
 

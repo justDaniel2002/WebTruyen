@@ -48,11 +48,18 @@ export const Navbar = () => {
               { content: "Truyện đã thích", link: "" },
             ]}
           />
-          <div className="dropdown bg-neu">
-            <button onClick={() => navigate("/user/createnovel")} className="dropbtn">
-              Đăng truyện
-            </button>
-          </div>
+          {JWT ? (
+            <div className="dropdown bg-neu">
+              <button
+                onClick={() => navigate("/user/createnovel")}
+                className="dropbtn"
+              >
+                Đăng truyện
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="flex">

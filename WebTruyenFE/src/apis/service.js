@@ -65,11 +65,11 @@ export const callApiFEPost = async (URL, data = {}) => {
 
 export const callAPIFEPostToken = async (token, url, data) => {
   try {
-    const res = await axios.post(url,data, {
+    const res = await axios.post(url, data, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res.data;
   } catch (error) {
@@ -79,7 +79,7 @@ export const callAPIFEPostToken = async (token, url, data) => {
       type: "error",
     };
   }
-}
+};
 
 export const getUserInfo = async (token) => {
   // try {
@@ -115,9 +115,9 @@ export const getUserInfo = async (token) => {
       res = response.json();
     })
     .catch((error) => {
+      toast.error("Đăng nhập hết thời hạn");
       res = { ...error, type: "error" };
     });
 
-  
   return res;
 };

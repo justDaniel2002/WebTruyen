@@ -63,13 +63,13 @@ export const SignUpContainer = () => {
         <div className="mb-3">
           <div className="mb-3 text-xl font-semibold">Re-Password</div>
           <input
+            type="password"
             value={rpassword.value}
             onChange={(event) => {
               setRPass(event.target.value);
             }}
             className="w-full rounded-xl px-5 py-2 border border-black"
             placeholder="Password"
-            type="Re enter password"
           />
         </div>
         <div className="my-10"></div>

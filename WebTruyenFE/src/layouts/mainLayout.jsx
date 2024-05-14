@@ -19,7 +19,7 @@ export const MainLayout = () => {
   useEffect(() => {
     getCategory().then((res) => setCate(res));
     getStories({}).then((res) => setStories(res));
-    if (cookies.JWT) {
+    if (cookies.JWT!="undefined"&&cookies.JWT!=undefined) {
       getUserInfo(cookies.JWT).then((res) => {
         if (res?.type == "error") {
           setJWT(undefined);

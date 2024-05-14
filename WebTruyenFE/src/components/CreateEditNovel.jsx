@@ -2,11 +2,18 @@ import ReactModal from "react-modal";
 import { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { RTEditor } from "./richTextEditor";
+import { useRecoilState } from "recoil";
+import { categoriesAtom } from "../states/atom";
 
 export const CreateEditNovel = (novel = undefined) => {
   const [editNovel, setNovel] = useState(novel);
   const [chapterModal, setChapterModal] = useState(false);
   const [categories, setCate] = useRecoilState(categoriesAtom);
+
+  const UploadTruyen = () => {
+    const image = document.getElementById('image').value
+    console.log(image)
+  }
   return (
     <>
       <div className="py-20 px-20 text-xl">
@@ -18,6 +25,14 @@ export const CreateEditNovel = (novel = undefined) => {
             onChange={(event) =>
               setNovel({ ...editNovel, title: event.target.value })
             }
+          />
+        </div>
+        <div className="my-5">
+          <div className="mb-5">Ảnh Truyện</div>
+          <input
+            type="file"
+            className="rounded-lg p-3 border-2 w-1/3"
+            id="image"
           />
         </div>
         <div className="my-5">
@@ -65,7 +80,7 @@ export const CreateEditNovel = (novel = undefined) => {
             <Icon icon="icons8:plus" className="ml-1 text-2xl" />
           </span>
         </div>
-        <div className="flex justify-end">
+        <div onClick={UploadTruyen} className="flex justify-end">
           <button className="py-2 px-5 bg-blue-900 text-white hover:bg-blue-700 text-base">
             {novel ? "Cập Nhập" : "Đăng"}
           </button>
