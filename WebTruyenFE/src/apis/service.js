@@ -119,6 +119,24 @@ export const callAPIFEPostToken = async (token, url, data) => {
   }
 };
 
+export const callAPIFEDelToken = async (token, url, params="") => {
+  try {
+    const res = await axios.delete(url+params, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    toast.error(error.message);
+    return {
+      error,
+      type: "error",
+    };
+  }
+};
+
 export const callAPIFEGetToken = async (token, url, params = "") => {
   try {
     const res = await axios.get(url + params, {

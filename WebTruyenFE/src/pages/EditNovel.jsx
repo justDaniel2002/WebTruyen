@@ -6,6 +6,7 @@ import { categoriesAtom, jwtATom } from "../states/atom";
 import { getURL, uploadImage } from "../firebase";
 import { toast } from "react-toastify";
 import {
+  callAPIFEDelToken,
   callAPIFEPostToken,
   callApiFEGet,
   callApiFEPost,
@@ -13,6 +14,7 @@ import {
 import {
   AddChapter,
   AddStory,
+  DeleteChapter,
   EditChapter,
   EditStory,
   GetStoryDetail,
@@ -36,22 +38,22 @@ export const EditNovel = () => {
   const params = useParams();
   const setUp = async () => {
     callApiFEGet(GetStoryDetail, params.id).then((res) => {
-        setNovel(res);
-        const chapter = res?.chapers?.map((c) => {
-          return {
-            id: c.id,
-            content: c.content,
-            name: c.name,
-            storyID: c.storyID,
-            order: c.order,
-          };
-        });
-        setChap(chapter);
-        setAddChapter({ storyID: editNovel.id, title: "", order: 1, name: "" });
+      setNovel(res);
+      const chapter = res?.chapers?.map((c) => {
+        return {
+          id: c.id,
+          content: c.content,
+          name: c.name,
+          storyID: c.storyID,
+          order: c.order,
+        };
       });
-  }
+      setChap(chapter);
+      setAddChapter({ storyID: res?.id, title: "", order: 1, name: "" });
+    });
+  };
   useEffect(() => {
-    setUp()
+    setUp();
   }, []);
 
   const UpdateTruyen = async () => {
@@ -96,18 +98,25 @@ export const EditNovel = () => {
     callAPIFEPostToken(JWT, AddChapter, addChapter).then((res) => {
       if (res.type != "error") {
         toast.success("Đăng Chương Thành Công");
-        setUp()
+        setUp();
       }
     });
-    
   };
 
   const UpdateChapter = async () => {
-    setChap([...chapters, addChapter]);
     callAPIFEPostToken(JWT, EditChapter, editChapter).then((res) => {
       if (res.type != "error") {
         toast.success("Cập Nhập Chương Thành Công");
-        setUp()
+        setUp();
+      }
+    });
+  };
+
+  const DelChapter = async (id) => {
+    callAPIFEDelToken(JWT, DeleteChapter, id).then((res) => {
+      if (res.type != "error") {
+        toast.success("Xóa Chương Thành Công");
+        setUp();
       }
     });
   };
@@ -168,8 +177,8 @@ export const EditNovel = () => {
           ></textarea>
         </div>
         <hr className="my-5" />
-        <div className="underline underline-offset-8 flex items-center">
-          CHƯƠNG <span>{chapterModal.v}</span>{" "}
+        <div className="underline underline-offset-8 flex items-center mb-10">
+          CHƯƠNG
           <span
             onClick={() => {
               setChapterModal(true);
@@ -180,27 +189,38 @@ export const EditNovel = () => {
         </div>
 
         <div className="flex mb-5">
-          <div className="w-1/2 cursor-pointer pr-5">
+          <div className="w-1/4 cursor-pointer pr-5">
             {chapters?.slice(0, 50)?.map((c) => {
               return (
                 <div
                   key={c.id}
-                  onClick={() => {
-                    setEditChapter(c);
-                    setudChapterModal(true);
-                  }}
-                  className="text-medium hover:underline"
+                  className="flex justify-between pr-32 items-center text-medium hover:underline"
                 >
-                  * Chương {c.order}: {c.name}
+                  <span
+                    onClick={() => {
+                      setEditChapter(c);
+                      setudChapterModal(true);
+                    }}
+                  >
+                    * Chương {c.order}: {c.name}
+                  </span>
+                  <Icon
+                    onClick={() => DelChapter(c.id)}
+                    icon="mdi:trash"
+                    className="text-xl"
+                  />
                 </div>
               );
             })}
           </div>
-          <div className="w-1/2"></div>
+          <div className="w-1/4"></div>
         </div>
 
-        <div onClick={UpdateTruyen} className="flex justify-end">
-          <button className="py-2 px-5 bg-blue-900 text-white hover:bg-blue-700 text-base">
+        <div className="flex justify-end">
+          <button
+            onClick={UpdateTruyen}
+            className="py-2 px-5 bg-blue-900 text-white hover:bg-blue-700 text-base"
+          >
             Cập Nhập
           </button>
         </div>
