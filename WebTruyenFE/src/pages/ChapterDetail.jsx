@@ -45,7 +45,7 @@ export const ChapterDetail = () => {
             onChange={(event) => {
               changeChapter(event.target.value);
             }}
-            defaultValue={chapter?.id}
+            value={chapter?.id}
             className="bg-lime-600 py-3 px-5 overflow-hidden text-white"
           >
             {novel?.chapers?.map((c) => {

@@ -104,7 +104,7 @@ namespace webtruyen.Controllers
 
                         // Lấy thông tin từ JWT
                         var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-                        Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+                        Account account = context.Accounts.Include(a => a.Chapters).FirstOrDefault(n => n.Email.Equals(email));
                         if (account != null && account.Chapters.Contains(chaper))
                         {
                             return Ok(chaper);
@@ -162,7 +162,7 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email == email);
+            Account account = context.Accounts.Include(n => n.Role).Include(n => n.Chapters).FirstOrDefault(n => n.Email == email);
             return Ok(account);
         }
 
@@ -224,11 +224,13 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.FirstOrDefault(n => n.Equals(email));
-            List<Chaper> chapers = context.Chapers.Include(n => chapterIDs.Contains(n.Id)).ToList();
-            if (chapers != null && account.AccountBalance == (10 * chapers.Count()))
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            List<Chaper> chapers = context.Chapers.Where(n => chapterIDs.Contains(n.Id)).ToList();
+            if (chapers != null && account.AccountBalance >= (10 * chapers.Count()))
             {
-                account.Chapters = chapers;
+                List<Chaper> combinedList = new List<Chaper>(account.Chapters);
+                combinedList.AddRange(chapers);
+                account.Chapters = combinedList;
                 account.AccountBalance = account.AccountBalance - (10 * chapers.Count());
                 context.SaveChanges();
                 return Ok();

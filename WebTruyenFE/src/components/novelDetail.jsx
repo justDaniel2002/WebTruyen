@@ -1,17 +1,26 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { jwtATom, storiesAtom } from "../states/atom";
+import { jwtATom, storiesAtom, userInfoAtom } from "../states/atom";
 import { emptyAvatar } from "../data/data";
 import { CommentContainer } from "./commentContainer";
 import { useState } from "react";
-import { callAPIFEPostToken, callApiFEGet, getStories } from "../apis/service";
+import {
+  callAPIFEPostToken,
+  callApiFEGet,
+  getStories,
+  getUserInfo,
+  unlockChapter,
+} from "../apis/service";
 import { CreateReview, GetStoryDetail } from "../apis/apis";
+import { toast } from "react-toastify";
+import { getEmailPrefix } from "../helpers/helper";
 
 export const NovelDetail = ({ novel, setNovel }) => {
   const [stories, setStories] = useRecoilState(storiesAtom);
   const [JWT, setJWT] = useRecoilState(jwtATom);
   const [review, setReview] = useState("");
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const AuthorStories = stories
     .filter((story) => story.author == novel.author)
@@ -22,10 +31,29 @@ export const NovelDetail = ({ novel, setNovel }) => {
       content: review,
       storyID: novel.id,
     }).then(() => {
-      callApiFEGet(GetStoryDetail, novel.id).then((response) =>
-        setNovel(response)
-      );
+      getUserInfo(JWT).then((res) => {
+        if (res?.type == "error") {
+          setJWT(undefined);
+          setUserInfo(undefined);
+          navigate("/login");
+        } else {
+          setJWT(cookies.JWT);
+          setUserInfo({ ...res, username: getEmailPrefix(res.email) });
+        }
+      });
     });
+  };
+
+  const payChapter = async (cid) => {
+    if (JWT) {
+      unlockChapter([cid], JWT).then(() => {
+        getUserInfo(JWT).then((res) => {
+          setUserInfo({ ...res, username: getEmailPrefix(res.email) });
+        });
+      });
+    } else {
+      toast.info("Đăng nhập để có thể xem chương này");
+    }
   };
   return (
     <>
@@ -81,22 +109,48 @@ export const NovelDetail = ({ novel, setNovel }) => {
           <div className="flex mb-5">
             <div className="w-1/2 cursor-pointer pr-5">
               {novel?.chapers?.slice(0, 50)?.map((c) => {
-                if(c.status){
-                  return <div
-                  key={c.id}
-                  onClick={() => navigate(`/chapter/${novel.id}/${c.id}`)}
-                  className="text-medium hover:underline"
-                >
-                  * Chương {c.order}: {c.name}
-                </div>
-                }else{
-                  return <div
-                  key={c.id}
-                  
-                  className="flex items-center justify-between text-medium hover:underline"
-                >
-                  <span>* Chương {c.order}: {c.name}</span> <span className="flex items-center"><Icon icon="material-symbols:lock" className="mr-2" /> Khóa</span>
-                </div>
+                if (c.status) {
+                  return (
+                    <div
+                      key={c.id}
+                      onClick={() => navigate(`/chapter/${novel.id}/${c.id}`)}
+                      className="text-medium hover:underline"
+                    >
+                      * Chương {c.order}: {c.name}
+                    </div>
+                  );
+                } else if (userInfo?.chapters?.find((ch) => ch.id == c.id)) {
+                  return (
+                    <div
+                      key={c.id}
+                      onClick={() => navigate(`/chapter/${novel.id}/${c.id}`)}
+                      className="flex items-center justify-between text-medium hover:underline"
+                    >
+                      <span>
+                        * Chương {c.order}: {c.name}
+                      </span>{" "}
+                      <span className="flex items-center">
+                      <Icon icon="mingcute:unlock-fill"  />
+                        Mở
+                      </span>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div
+                      key={c.id}
+                      onClick={() => payChapter(c.id)}
+                      className="flex items-center justify-between text-medium hover:underline"
+                    >
+                      <span>
+                        * Chương {c.order}: {c.name}
+                      </span>{" "}
+                      <span className="flex items-center">
+                        <Icon icon="material-symbols:lock" className="mr-2" />{" "}
+                        Khóa
+                      </span>
+                    </div>
+                  );
                 }
               })}
             </div>
