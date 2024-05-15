@@ -49,7 +49,7 @@ export const Navbar = () => {
               { content: "Truyện đã thích", link: "" },
             ]}
           />
-          {JWT ? (
+          {userInfo?.roleId==1 ? (
             <div className="dropdown bg-neu">
               <button
                 onClick={() => navigate("/user/createnovel")}
@@ -58,7 +58,16 @@ export const Navbar = () => {
                 Đăng truyện
               </button>
             </div>
-          ) : (
+          ) : userInfo?.roleId==2 ? (
+            <div className="dropdown bg-neu">
+              <button
+                onClick={() => navigate("/admin")}
+                className="dropbtn"
+              >
+                Admin
+              </button>
+            </div>
+          ):(
             ""
           )}
         </div>

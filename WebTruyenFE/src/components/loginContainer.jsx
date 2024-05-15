@@ -41,7 +41,11 @@ export const LoginContainer = () => {
           setJWT(result);
           setUserInfo({ ...res, username: getEmailPrefix(res.email) });
           toast.info(`Xin chào ${getEmailPrefix(res.email)}`);
-          navigate("/");
+          if(res?.role.id==2){
+            navigate("/admin");
+          }else{
+            navigate("/");
+          }
         }
       });
       

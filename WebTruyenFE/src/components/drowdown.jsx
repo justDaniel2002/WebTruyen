@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export const Dropdown = ({ content, list }) => {
   return (
@@ -14,7 +15,7 @@ export const Dropdown = ({ content, list }) => {
               key={index}
               className="hover:bg-blue-700  hover:text-white font-normal text-base p-3"
             >
-              <a href={l?.link}>{l.content}</a>
+              <Link to={l?.link}>{l.content}</Link>
             </div>
           );
         })}

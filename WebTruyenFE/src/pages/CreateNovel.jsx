@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { categoriesAtom, jwtATom } from "../states/atom";
+import { categoriesAtom, jwtATom, userInfoAtom } from "../states/atom";
 import { getURL, uploadImage } from "../firebase";
 import { toast } from "react-toastify";
 import { callAPIFEPostToken, callApiFEPost } from "../apis/service";
@@ -9,6 +9,7 @@ import { AddChapter, AddStory } from "../apis/apis";
 import { useNavigate } from "react-router-dom";
 
 export const CreateNovel = () => {
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [editNovel, setNovel] = useState({ categoryId: 1 });
 
   const [categories, setCate] = useRecoilState(categoriesAtom);
@@ -52,7 +53,11 @@ export const CreateNovel = () => {
     });
     if (res?.type != "error") {
       toast.success("Đăng Truyện Thành Công");
-      navigate(`/user/editNovel/${res.id}`);
+      if(userInfo?.roleId == 2){
+        navigate(`/admin/editNovel/${res.id}`);
+      }else{
+        navigate(`/user/editNovel/${res.id}`);
+      }
     }
   };
 

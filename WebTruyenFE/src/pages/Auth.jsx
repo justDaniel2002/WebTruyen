@@ -5,14 +5,17 @@ import { SignUpContainer } from "../components/signUpContainer";
 import { useRecoilState } from "recoil";
 import { jwtATom } from "../states/atom";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Auth = ({ type = "login" }) => {
   const [JWT, setJWT] = useRecoilState(jwtATom);
   const navigate = useNavigate();
 
-  if (JWT != undefined && JWT != "undefined") {
-    navigate("/");
-  }
+  useEffect(()=>{
+    if (JWT != undefined && JWT != "undefined") {
+      navigate("/");
+    }
+  },[])
 
   return (
     <>

@@ -1,5 +1,19 @@
+import { useRecoilState } from "recoil";
 import logo from "../../assets/novelcomlogo.png";
+import { jwtATom, storiesAtom } from "../../states/atom";
+import { useEffect, useState } from "react";
+import { callAPIFEPostToken } from "../../apis/service";
+import { GetListAccount } from "../../apis/apis";
 export const AdminPage = () => {
+  const [stories, setStories] = useRecoilState(storiesAtom);
+  const [accounts, setAccount] = useState([]);
+  const [JWT, setJWT] = useRecoilState(jwtATom);
+
+  useEffect(() => {
+    callAPIFEPostToken(JWT, GetListAccount, {}).then((res) => {
+      setAccount(res);
+    });
+  }, []);
   return (
     <>
       <div>
@@ -8,12 +22,12 @@ export const AdminPage = () => {
           <div className="opacity-100 w-1/4 px-10 pr-20 py-5 mx-10 text-xl font-semibold rounded-xl bg-slate-800 h-fit">
             <div className="">Novel</div>
             <hr className="my-3 border-white"/>
-            <div className="font-normal">0</div>
+            <div className="font-normal">{stories?.length??0}</div>
           </div>
           <div className="opacity-100 w-1/4 px-10 pr-20 py-5 mx-10 text-xl font-semibold rounded-xl bg-slate-800 h-fit">
             <div className="">Account</div>
             <hr className="my-3 border-white"/>
-            <div className="font-normal">0</div>
+            <div className="font-normal">{accounts?.length??0}</div>
           </div>
           
         </div>

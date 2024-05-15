@@ -25,6 +25,7 @@ import { MemberLayout } from "./layouts/memberLayout";
 import { CreateNovel } from "./pages/CreateNovel";
 import { CreateEditNovel } from "./components/CreateEditNovel";
 import { EditNovel } from "./pages/EditNovel";
+import { ManageAccounts } from "./pages/Admin/ManageAccount";
 
 function App() {
   
@@ -50,9 +51,10 @@ function App() {
           
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminPage />} />
-            <Route path="addNovel" element={<CreateEditNovel />} />
-            <Route path="editNovel" element={<CreateEditNovel />} />
+            <Route path="addNovel" element={<CreateNovel />} />
+            <Route path="editNovel/:id" element={<EditNovel />} />
             <Route path="manageNovel" element={<ManageStories />} />
+            <Route path="managerAccount" element={<ManageAccounts />} />
           </Route>
         </Route>
       </Route>

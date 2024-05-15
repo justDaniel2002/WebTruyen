@@ -6,13 +6,14 @@ import { emptyAvatar } from "../data/data";
 import { CommentContainer } from "./commentContainer";
 import { useState } from "react";
 import {
+  callAPIFEDelToken,
   callAPIFEPostToken,
   callApiFEGet,
   getStories,
   getUserInfo,
   unlockChapter,
 } from "../apis/service";
-import { CreateReview, GetStoryDetail } from "../apis/apis";
+import { CreateReview, DeleteChapter, GetStoryDetail } from "../apis/apis";
 import { toast } from "react-toastify";
 import { getEmailPrefix } from "../helpers/helper";
 
@@ -54,6 +55,15 @@ export const NovelDetail = ({ novel, setNovel }) => {
     } else {
       toast.info("Đăng nhập để có thể xem chương này");
     }
+  };
+
+  const DelChapter = async (id) => {
+    callAPIFEDelToken(JWT, DeleteChapter, id).then((res) => {
+      if (res.type != "error") {
+        toast.success("Xóa Chương Thành Công");
+        callApiFEGet(GetStoryDetail, id).then((response) => setNovel(response));
+      }
+    });
   };
   return (
     <>
@@ -109,7 +119,27 @@ export const NovelDetail = ({ novel, setNovel }) => {
           <div className="flex mb-5">
             <div className="w-1/2 cursor-pointer pr-5">
               {novel?.chapers?.slice(0, 50)?.map((c) => {
-                if (c.status) {
+                if (userInfo?.roleId == 2) {
+                  return (
+                    <div
+                      key={c.id}
+                      className="flex items-center justify-between text-medium hover:underline"
+                    >
+                      <span
+                        onClick={() => navigate(`/chapter/${novel.id}/${c.id}`)}
+                      >
+                        * Chương {c.order}: {c.name}
+                      </span>{" "}
+                      <span className="flex items-center">
+                        <Icon
+                          onClick={() => DelChapter(c.id)}
+                          icon="mdi:trash"
+                          className="text-xl"
+                        />
+                      </span>
+                    </div>
+                  );
+                } else if (c.status) {
                   return (
                     <div
                       key={c.id}
@@ -130,7 +160,7 @@ export const NovelDetail = ({ novel, setNovel }) => {
                         * Chương {c.order}: {c.name}
                       </span>{" "}
                       <span className="flex items-center">
-                      <Icon icon="mingcute:unlock-fill"  />
+                        <Icon icon="mingcute:unlock-fill" />
                         Mở
                       </span>
                     </div>

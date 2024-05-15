@@ -8,12 +8,12 @@ import { useEffect } from "react";
 
 export const AdminLayout = () => {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (userInfo?.role?.id != 2) {
-            navigate("/");
-          }
-    }, [])
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (userInfo?.role?.id != 2) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       <div className="flex">
@@ -22,7 +22,12 @@ export const AdminLayout = () => {
             <Dropdown content={"Quản lý truyện tranh"} list={NovelManager} />
           </div>
           <div>
-            <Dropdown content={"Quản lý tài khoản"} list={[]} />
+            <div className="dropdown w-full">
+              <button onClick={() => {navigate("/admin/managerAccount")}} className="dropbtn">
+                Quản lý tài khoản
+              </button>
+              
+            </div>
           </div>
         </div>
         <div className="w-4/5">

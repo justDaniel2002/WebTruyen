@@ -83,7 +83,7 @@ app.MapPost("/security/createToken",
 [AllowAnonymous] (Account user) =>
 {
     WebtruyenContext context = new WebtruyenContext();
-    Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email.Equals(user.Email) && n.Password.Equals(user.Password));
+    Account account = context.Accounts.Include(n => n.Role).FirstOrDefault(n => n.Email.Equals(user.Email) && n.Password.Equals(user.Password) && n.IsActive == true);
     if (account != null)
     {
         var issuer = builder.Configuration["Jwt:Issuer"];

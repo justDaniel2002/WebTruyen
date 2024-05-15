@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 export const StoriesCol = [
   { id: "title", label: "Tiêu đề", minWidth: 170 },
@@ -17,7 +18,45 @@ export const StoriesCol = [
   },
 ];
 
-export function StickyHeadTable({ columns = [], rows = [] }) {
+export const AccountsCol = [
+  { id: "email", label: "Email", minWidth: 170 },
+  { id: "address", label: "Địa chỉ", minWidth: 100 },
+  { id: "phone", label: "Điện thoại", minWidth: 100 },
+  {
+    id: "createdDate",
+    label: "Ngày tạo",
+    minWidth: 170,
+  },
+
+  {
+    id: "accountBalance",
+    label: "Số dư",
+    minWidth: 170,
+    align: "right",
+  },
+  {
+    id: "isActive",
+    label: "Hoạt động",
+    minWidth: 170,
+    align: "right",
+    format: (v) => {
+      return v ? (
+        <div className="flex items-center"><div className="h-3 w-3 mr-2 rounded-full bg-green-500"></div> Active</div>
+      ) : (
+        <div className="flex"><div className="h-3 w-3 mr-2 rounded-full bg-red-500"></div> UnActive</div>
+      );
+    },
+  },
+];
+
+export function StickyHeadTable({
+  columns = [],
+  rows = [],
+  onSearch = () => {},
+  detailUrl,
+  deleteFunc = () => {},
+  deleteContent = "Delete",
+}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -73,7 +112,12 @@ export function StickyHeadTable({ columns = [], rows = [] }) {
               data-popper-reference-hidden=""
               data-popper-escaped=""
               data-popper-placement="top"
-              style={{position: "absolute", inset: "auto auto 0px 0px", margin: '0px', transform: 'translate3d(522.5px, 3847.5px, 0px)'}}
+              style={{
+                position: "absolute",
+                inset: "auto auto 0px 0px",
+                margin: "0px",
+                transform: "translate3d(522.5px, 3847.5px, 0px)",
+              }}
             >
               <ul
                 className="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
@@ -119,6 +163,7 @@ export function StickyHeadTable({ columns = [], rows = [] }) {
               </svg>
             </div>
             <input
+              onChange={onSearch}
               type="text"
               id="table-search"
               className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -147,9 +192,9 @@ export function StickyHeadTable({ columns = [], rows = [] }) {
                   {col.label}
                 </th>
               ))}
-               <th scope="col" className="px-6 py-3">
-                  Action
-                </th>
+              <th scope="col" colSpan={2} className="px-6 py-3">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -173,16 +218,28 @@ export function StickyHeadTable({ columns = [], rows = [] }) {
                 >
                   {r[columns[0].id]}
                 </th>
-                {columns.slice(1,columns.length).map(c =>
-                    <td className="px-6 py-4 h-10 overflow-y-hidden">{r[c.id]}</td>
-                )}
-                <td className="px-6 py-4">
-                  <a
-                    href="#"
+                {columns.slice(1, columns.length).map((c) => (
+                  <td className="px-6 py-4 h-10 overflow-y-hidden">
+                    {c?.format ? c.format(r[c.id]) : r[c.id]}
+                    
+                  </td>
+                ))}
+                {detailUrl? <td className="px-6 py-4">
+                  <Link
+                    to={`${detailUrl}/${r.id}`}
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
                     Detail
-                  </a>
+                  </Link>
+                </td>:""}
+               
+                <td className="px-6 py-4">
+                  <button
+                    onClick={() => deleteFunc(r.id)}
+                    className="font-medium text-red-600 dark:text-blue-500 hover:underline"
+                  >
+                    {deleteContent}
+                  </button>
                 </td>
               </tr>
             ))}

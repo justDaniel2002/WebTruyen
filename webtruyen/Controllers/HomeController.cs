@@ -81,6 +81,27 @@ namespace webtruyen.Controllers
             }
         }
 
+        [Authorize(Policy = "Admin")]
+        [HttpDelete]
+        [Route("deletStory/{id}")]
+        public IActionResult delStoryByID(int id)
+        {
+            Story story = context.Stories.Include(n => n.Chapers).Include(n => n.Reviews).Include(n => n.Reviews).FirstOrDefault(n => n.Id == id);
+            if (story != null)
+            {
+                context.Reviews.RemoveRange(story.Reviews);
+                context.Chapers.RemoveRange(story.Chapers);
+                context.SaveChanges();
+                context.Stories.Remove(story);
+                context.SaveChanges();
+                return Ok(story);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpGet]
         [Route("getChapterDetail/{id}")]
         public IActionResult getChapterDetailByID(int id)
@@ -106,6 +127,9 @@ namespace webtruyen.Controllers
                         var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
                         Account account = context.Accounts.Include(a => a.Chapters).FirstOrDefault(n => n.Email.Equals(email));
                         if (account != null && account.Chapters.Contains(chaper))
+                        {
+                            return Ok(chaper);
+                        } else if (account.RoleId == 2)
                         {
                             return Ok(chaper);
                         }
@@ -149,7 +173,7 @@ namespace webtruyen.Controllers
             return Ok(account);
         }
 
-        [Authorize(Policy = "User")]
+        [Authorize(Policy = "UserOrAdmin")]
         [HttpPost]
         [Route("userprofile")]
         public IActionResult updateProfile()
@@ -343,7 +367,7 @@ namespace webtruyen.Controllers
                 Content = request.content,
                 Name = request.name,
                 Order = request.order,
-                Status = true,
+                Status = request.status,
                 Story = context.Stories.FirstOrDefault(n => n.Id == request.storyID),
                 StoryId = request.storyID
             };

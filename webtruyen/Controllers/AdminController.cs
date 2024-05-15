@@ -46,12 +46,12 @@ namespace webtruyen.Controllers
             return Ok(accounts);
         }
 
-        [HttpGet]
-        [Route("deleteAccounts")]
-        public IActionResult deleteAccount(int accountID)
+        [HttpDelete]
+        [Route("deleteAccounts/{id}")]
+        public IActionResult deleteAccount(int id)
         {
-            Account account = context.Accounts.FirstOrDefault(n => n.Id == accountID);
-            account.IsDelete = true;
+            Account account = context.Accounts.FirstOrDefault(n => n.Id == id);
+            account.IsActive = !account.IsActive;
             context.SaveChanges();
             return Ok();
         }

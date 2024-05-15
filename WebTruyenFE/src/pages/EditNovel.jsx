@@ -2,7 +2,7 @@ import ReactModal from "react-modal";
 import { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRecoilState } from "recoil";
-import { categoriesAtom, jwtATom } from "../states/atom";
+import { categoriesAtom, jwtATom, userInfoAtom } from "../states/atom";
 import { getURL, uploadImage } from "../firebase";
 import { toast } from "react-toastify";
 import {
@@ -24,6 +24,7 @@ import { useEffect } from "react";
 import { RTEditor } from "../components/richTextEditor";
 
 export const EditNovel = () => {
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const [editNovel, setNovel] = useState();
   const [chapterModal, setChapterModal] = useState(false);
   const [udchapterModal, setudChapterModal] = useState(false);
@@ -46,10 +47,17 @@ export const EditNovel = () => {
           name: c.name,
           storyID: c.storyID,
           order: c.order,
+          status: c.status
         };
       });
       setChap(chapter);
-      setAddChapter({ storyID: res?.id, title: "", order: 1, name: "" });
+      setAddChapter({
+        storyID: res?.id,
+        title: "",
+        order: 1,
+        name: "",
+        status: true,
+      });
     });
   };
   useEffect(() => {
@@ -259,6 +267,20 @@ export const EditNovel = () => {
               className="rounded-lg p-3 border-2 w-1/3 text-black"
             />
           </div>
+
+          <div className={`my-5 ${userInfo?.roleId != 2 ? "hidden" : ""}`}>
+            <div className="mb-5">Phí</div>
+            <select className="text-black"
+              onChange={(event) => {
+                setAddChapter({ ...addChapter, status: event.target.value });
+              }}
+              value={addChapter?.status}
+            >
+              <option value={true}>Miễn Phí</option>
+              <option value={false}>Mất Phí</option>
+            </select>
+          </div>
+
           <div className="my-5">
             <div id="coc" className="mb-5">
               Nội Dung
@@ -316,6 +338,19 @@ export const EditNovel = () => {
               }
               className="rounded-lg p-3 border-2 w-1/3 text-black"
             />
+          </div>
+          <div className={`my-5 ${userInfo?.roleId != 2 ? "hidden" : ""}`}>
+            <div className="mb-5">Phí</div>
+            <select
+            className="text-black"
+              onChange={(event) => {
+                setAddChapter({ ...editChapter, status: event.target.value });
+              }}
+              value={editChapter?.status}
+            >
+              <option value={true}>Miễn Phí</option>
+              <option value={false}>Mất Phí</option>
+            </select>
           </div>
           <div className="my-5">
             <div id="coc" className="mb-5">
