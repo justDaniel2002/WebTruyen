@@ -70,7 +70,7 @@ namespace webtruyen.Controllers
         [Route("getStoryDetail/{id}")]
         public IActionResult getStoryByID(int id)
         {
-            Story story = context.Stories.Include(n => n.Category).Include(n => n.Chapers).Include(n => n.Reviews).ThenInclude(n => n.User).FirstOrDefault(n => n.Id == id);
+            Story story = context.Stories.Include(n => n.Category).Include(n => n.Chapers).Include(n => n.Rates).Include(n => n.Reviews).ThenInclude(n => n.User).FirstOrDefault(n => n.Id == id);
             if(story != null)
             {
                 return Ok(story);
@@ -186,7 +186,7 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.Include(n => n.Role).Include(n => n.Chapters).FirstOrDefault(n => n.Email == email);
+            Account account = context.Accounts.Include(n => n.Role).Include(n => n.Chapters).Include(n => n.Stories).FirstOrDefault(n => n.Email == email);
             return Ok(account);
         }
 
@@ -356,6 +356,7 @@ namespace webtruyen.Controllers
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
             var token = authHeader.Substring("Bearer ".Length).Trim();
 
+
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(token);
 
@@ -419,6 +420,99 @@ namespace webtruyen.Controllers
             context.Chapers.Remove(chapter);
             context.SaveChanges();
             return Ok("Remove Chapter Successfully!");
+        }
+
+        [HttpPost]
+        [Route("rating")]
+        [Authorize(Policy = "UserOrAdmin")]
+        public IActionResult Rating([FromBody] RatingDTO request)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            Rate rate = context.Rates.FirstOrDefault(n => n.AccountId == request.AccountId && n.StoryId == request.StoryId);
+            if (rate != null)
+            {
+                rate.Rate1 = request.Rate1;
+            }
+            else
+            {
+                rate = new Rate
+                {
+                    AccountId = request.AccountId,
+                    StoryId = request.StoryId,
+                    Rate1 = request.Rate1,
+                };
+                context.Rates.Add(rate);
+            }
+
+            context.SaveChanges();
+            return Ok(request);
+        }
+
+        [HttpPost]
+        [Route("changePassword")]
+        [Authorize(Policy = "User")]
+        public IActionResult changePassword(ChangePasswordDTO request)
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            if(account!=null&&account.Password.Equals(request.oldPassword))
+            {
+                account.Password = request.newPassword;
+                context.SaveChanges();
+                return Ok("Change password Successfully!");
+            }
+            else
+            {
+                return BadRequest("Wrong password");
+            }
+            
+        }
+
+
+        [HttpPost]
+        [Route("resetPassword")]
+        [Authorize(Policy = "User")]
+        public IActionResult resetPassword()
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Lấy thông tin từ JWT
+            var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            if (account!=null)
+            {
+                string resetPassword = Helper.GenerateRandomString();
+                string message = "your reset password is "+resetPassword;
+                account.Password = resetPassword;
+                Helper.SendEmail(account.Email, message);
+                context.SaveChanges();
+
+                return Ok("Reset password Successfully!");
+            }
+            else
+            {
+                return NotFound();
+            }
+
         }
 
 

@@ -31,9 +31,13 @@ public partial class Account
 
     public bool? IsDelete { get; set; }
 
+    public virtual ICollection<Rate> Rates { get; set; } = new List<Rate>();
+
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
-    public virtual Role? Role { get; set; } = null!;
+    public virtual Role Role { get; set; } = null!;
+
+    public virtual ICollection<Story> StoriesNavigation { get; set; } = new List<Story>();
 
     public virtual ICollection<Chaper> Chapters { get; set; } = new List<Chaper>();
 

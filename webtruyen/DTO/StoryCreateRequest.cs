@@ -8,5 +8,6 @@
         public long categoryID { get; set; }
         public string image { get; set; }
         public string author { get; set; }
+        public long createdBy { get; set; }
     }
 }

@@ -21,6 +21,8 @@ public partial class WebtruyenContext : DbContext
 
     public virtual DbSet<Chaper> Chapers { get; set; }
 
+    public virtual DbSet<Rate> Rates { get; set; }
+
     public virtual DbSet<Review> Reviews { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -29,7 +31,7 @@ public partial class WebtruyenContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost; Database=webtruyen; Trusted_Connection=True; MultipleActiveResultSets=true;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("server =DESKTOP-6A025HU\\SQL2019; database = webtruyen;uid=sa;pwd=123;TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -133,6 +135,24 @@ public partial class WebtruyenContext : DbContext
                 .HasConstraintName("FK_Chaper_Story");
         });
 
+        modelBuilder.Entity<Rate>(entity =>
+        {
+            entity.ToTable("Rate");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AccountId).HasColumnName("accountId");
+            entity.Property(e => e.Rate1).HasColumnName("rate");
+            entity.Property(e => e.StoryId).HasColumnName("storyId");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Rates)
+                .HasForeignKey(d => d.AccountId)
+                .HasConstraintName("FK_Rate_Account");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.Rates)
+                .HasForeignKey(d => d.StoryId)
+                .HasConstraintName("FK_Rate_Story");
+        });
+
         modelBuilder.Entity<Review>(entity =>
         {
             entity.ToTable("Review");
@@ -171,6 +191,7 @@ public partial class WebtruyenContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Author).HasColumnName("author");
             entity.Property(e => e.CategoryId).HasColumnName("categoryID");
+            entity.Property(e => e.CreatedBy).HasColumnName("createdBy");
             entity.Property(e => e.CreatedDate)
                 .HasColumnType("datetime")
                 .HasColumnName("createdDate");
@@ -189,6 +210,10 @@ public partial class WebtruyenContext : DbContext
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Story_Category");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.StoriesNavigation)
+                .HasForeignKey(d => d.CreatedBy)
+                .HasConstraintName("FK_Story_Account");
         });
 
         OnModelCreatingPartial(modelBuilder);

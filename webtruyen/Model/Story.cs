@@ -29,9 +29,15 @@ public partial class Story
 
     public string Image { get; set; } = null!;
 
+    public long? CreatedBy { get; set; }
+
     public virtual Category Category { get; set; } = null!;
 
     public virtual ICollection<Chaper> Chapers { get; set; } = new List<Chaper>();
+
+    public virtual Account? CreatedByNavigation { get; set; }
+
+    public virtual ICollection<Rate> Rates { get; set; } = new List<Rate>();
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
