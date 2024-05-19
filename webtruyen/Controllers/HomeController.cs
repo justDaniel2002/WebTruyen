@@ -186,7 +186,7 @@ namespace webtruyen.Controllers
 
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
-            Account account = context.Accounts.Include(n => n.Role).Include(n => n.Chapters).Include(n => n.Stories).FirstOrDefault(n => n.Email == email);
+            Account account = context.Accounts.Include(n => n.Role).Include(n => n.Chapters).Include(n => n.StoriesNavigation).FirstOrDefault(n => n.Email == email);
             return Ok(account);
         }
 
@@ -436,7 +436,7 @@ namespace webtruyen.Controllers
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
             Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
-            Rate rate = context.Rates.FirstOrDefault(n => n.AccountId == request.AccountId && n.StoryId == request.StoryId);
+            Rate rate = context.Rates.FirstOrDefault(n => n.AccountId == account.Id && n.StoryId == request.StoryId);
             if (rate != null)
             {
                 rate.Rate1 = request.Rate1;
@@ -445,7 +445,7 @@ namespace webtruyen.Controllers
             {
                 rate = new Rate
                 {
-                    AccountId = request.AccountId,
+                    AccountId = account.Id,
                     StoryId = request.StoryId,
                     Rate1 = request.Rate1,
                 };
@@ -486,8 +486,32 @@ namespace webtruyen.Controllers
 
         [HttpPost]
         [Route("resetPassword")]
-        [Authorize(Policy = "User")]
-        public IActionResult resetPassword()
+        public IActionResult resetPassword([FromBody] string email)
+        {
+            
+            Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
+            if (account!=null)
+            {
+                string resetPassword = Helper.GenerateRandomString();
+                string message = "Your password was reseted";
+                string body = "Your reset password is " + resetPassword;
+                account.Password = resetPassword;
+                Helper.SendEmail(account.Email, message, body);
+                context.SaveChanges();
+
+                return Ok("Reset password Successfully!");
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+
+        [HttpDelete]
+        [Route("deleteReview/{id}")]
+        [Authorize(Policy = "UserOrAdmin")]
+        public IActionResult deleteReview(int id)
         {
             var authHeader = HttpContext.Request.Headers["Authorization"].FirstOrDefault();
             var token = authHeader.Substring("Bearer ".Length).Trim();
@@ -498,21 +522,11 @@ namespace webtruyen.Controllers
             // Lấy thông tin từ JWT
             var email = jwtToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Email)?.Value;
             Account account = context.Accounts.FirstOrDefault(n => n.Email.Equals(email));
-            if (account!=null)
-            {
-                string resetPassword = Helper.GenerateRandomString();
-                string message = "your reset password is "+resetPassword;
-                account.Password = resetPassword;
-                Helper.SendEmail(account.Email, message);
-                context.SaveChanges();
+            Review review = context.Reviews.FirstOrDefault(n => n.Id == id);
 
-                return Ok("Reset password Successfully!");
-            }
-            else
-            {
-                return NotFound();
-            }
-
+            context.Reviews.Remove(review);
+            context.SaveChanges();
+            return Ok("Remove review Successfully!");
         }
 
 

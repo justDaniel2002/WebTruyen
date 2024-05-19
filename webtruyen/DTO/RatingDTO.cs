@@ -8,8 +8,6 @@ namespace webtruyen.DTO
 
             public int? Rate1 { get; set; }
 
-            public long? AccountId { get; set; }
-
             public long? StoryId { get; set; }
         
     }

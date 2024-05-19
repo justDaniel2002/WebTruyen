@@ -2,10 +2,12 @@ import axios from "axios";
 import {
   AuthLogin,
   AuthRegister,
+  ChangePassword,
   GetCategories,
   GetChapterDetail,
   GetStories,
   GetUserInfo,
+  ResetPassword,
   UnlockChapter,
 } from "./apis";
 import { toast } from "react-toastify";
@@ -78,9 +80,9 @@ export const unlockChapter = async (data, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    toast.success("Thanh toán thành công")
+    toast.success("Thanh toán thành công");
   } catch (error) {
-    toast.error("Không đủ xu để mua chương, hãy nạp thêm")
+    toast.error("Không đủ xu để mua chương, hãy nạp thêm");
   }
 };
 export const callApiFEGet = async (URL, params = "") => {
@@ -119,9 +121,9 @@ export const callAPIFEPostToken = async (token, url, data) => {
   }
 };
 
-export const callAPIFEDelToken = async (token, url, params="") => {
+export const callAPIFEDelToken = async (token, url, params = "") => {
   try {
-    const res = await axios.delete(url+params, {
+    const res = await axios.delete(url + params, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -194,4 +196,28 @@ export const getUserInfo = async (token) => {
     });
 
   return res;
+};
+
+export const changePassword = async (token, data) => {
+  const res = await axios.post(ChangePassword, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+export const resetPassword = async (email) => {
+  try {
+    const res = await axios.post(ResetPassword, email,{
+      headers: {
+        "Content-Type":"application/json-patch+json"
+      }
+    });
+    toast.info("Hãy kiểm tra email của bạn")
+    return res.data;
+  } catch (error) {
+    toast.error("Email này chưa đăng ký tài khoản")
+  }
 };

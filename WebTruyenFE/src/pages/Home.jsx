@@ -1,7 +1,7 @@
 import { CardContain } from "../components/cardContain";
 import { listCard } from "../mock/data";
 import { useRecoilState } from "recoil";
-import { categoriesAtom, storiesAtom } from "../states/atom";
+import { categoriesAtom, storiesAtom, userInfoAtom } from "../states/atom";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "../components/drowdown";
 import { signal, useSignal } from "@preact/signals-react";
@@ -173,7 +173,7 @@ export const Home = () => {
           </div>
         </div>
         <div className="px-4 w-full mt-4 flex  flex-wrap gap-y-3">
-          {userInfo?.stories?.slice(0,14)?.map((element) => {
+          {userInfo?.storiesNavigation?.slice(0,14)?.map((element) => {
             return (
               <div
                 key={element.id}

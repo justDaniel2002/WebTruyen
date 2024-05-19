@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TFOks08raURNtutNArViPKI1dYaVpR6Dny78l0MuhDa7SZQ+I/lTSEN+bZAgyAiEOTc0knSvILE2Ue+O+rrZ5g==",
+  "dgSpecHash": "d2FYMG+S11VVw1+ZFaIaEM2RINgkQaFk7e9YVhAipeaSyg+2DbBjlfrKesq/OGmpgEeRiLIdtC+LxNiKHnd4vw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\admin\\Downloads\\WebTruyen\\webtruyen\\webtruyen.csproj",
+  "projectFilePath": "D:\\VSCode project\\ReactJS+.Net\\WebTruyen\\webtruyen\\webtruyen.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

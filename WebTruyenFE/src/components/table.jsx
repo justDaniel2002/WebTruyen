@@ -41,12 +41,38 @@ export const AccountsCol = [
     align: "right",
     format: (v) => {
       return v ? (
-        <div className="flex items-center"><div className="h-3 w-3 mr-2 rounded-full bg-green-500"></div> Active</div>
+        <div className="flex items-center">
+          <div className="h-3 w-3 mr-2 rounded-full bg-green-500"></div> Active
+        </div>
       ) : (
-        <div className="flex"><div className="h-3 w-3 mr-2 rounded-full bg-red-500"></div> UnActive</div>
+        <div className="flex">
+          <div className="h-3 w-3 mr-2 rounded-full bg-red-500"></div> UnActive
+        </div>
       );
     },
   },
+];
+
+export const ReviewCol = [
+  { id: "story", label: "Truyện", minWidth: 170 },
+  { id: "user", label: "Tài khoản", minWidth: 100 },
+  { id: "content", label: "Bình luận", minWidth: 100 },
+  {
+    id: "createdDate",
+    label: "Ngày bình luận",
+    minWidth: 170,
+  },
+];
+
+export const RateCol = [
+  { id: "story", label: "Truyện", minWidth: 170 },
+  { id: "account", label: "Tài khoản", minWidth: 100 },
+  { id: "rate1", label: "Sao", minWidth: 100 },
+];
+
+export const CateCol = [
+  { id: "id", label: "id", minWidth: 170 },
+  { id: "name", label: "Thể loại", minWidth: 100 },
 ];
 
 export function StickyHeadTable({
@@ -54,7 +80,7 @@ export function StickyHeadTable({
   rows = [],
   onSearch = () => {},
   detailUrl,
-  deleteFunc = () => {},
+  deleteFunc,
   deleteContent = "Delete",
 }) {
   const [page, setPage] = React.useState(0);
@@ -174,7 +200,7 @@ export function StickyHeadTable({
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="p-4">
+              {/* <th scope="col" className="p-4">
                 <div className="flex items-center">
                   <input
                     id="checkbox-all-search"
@@ -185,7 +211,7 @@ export function StickyHeadTable({
                     checkbox
                   </label>
                 </div>
-              </th>
+              </th> */}
 
               {columns.map((col) => (
                 <th scope="col" className="px-6 py-3">
@@ -198,9 +224,9 @@ export function StickyHeadTable({
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => (
+            {rows?.map((r) => (
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td className="w-4 p-4">
+                {/* <td className="w-4 p-4">
                   <div className="flex items-center">
                     <input
                       id="checkbox-table-search-1"
@@ -211,7 +237,7 @@ export function StickyHeadTable({
                       checkbox
                     </label>
                   </div>
-                </td>
+                </td> */}
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -221,26 +247,32 @@ export function StickyHeadTable({
                 {columns.slice(1, columns.length).map((c) => (
                   <td className="px-6 py-4 h-10 overflow-y-hidden">
                     {c?.format ? c.format(r[c.id]) : r[c.id]}
-                    
                   </td>
                 ))}
-                {detailUrl? <td className="px-6 py-4">
-                  <Link
-                    to={`${detailUrl}/${r.id}`}
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  >
-                    Detail
-                  </Link>
-                </td>:""}
-               
-                <td className="px-6 py-4">
-                  <button
-                    onClick={() => deleteFunc(r.id)}
-                    className="font-medium text-red-600 dark:text-blue-500 hover:underline"
-                  >
-                    {deleteContent}
-                  </button>
-                </td>
+                {detailUrl ? (
+                  <td className="px-6 py-4">
+                    <Link
+                      to={`${detailUrl}/${r.id}`}
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Detail
+                    </Link>
+                  </td>
+                ) : (
+                  <td></td>
+                )}
+                {deleteFunc ? (
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => deleteFunc(r.id)}
+                      className="font-medium text-red-600 dark:text-blue-500 hover:underline"
+                    >
+                      {deleteContent}
+                    </button>
+                  </td>
+                ) : (
+                  <td></td>
+                )}
               </tr>
             ))}
           </tbody>

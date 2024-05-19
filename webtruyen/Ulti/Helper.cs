@@ -30,7 +30,7 @@ namespace webtruyen.Ulti
             return cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
         }
 
-        public static void SendEmail(string recipientEmail, string subject, string? body = "<main></main>")
+        public static void SendEmail(string recipientEmail, string subject, string body)
         {
             string smtpServer = "smtp.gmail.com";
             int smtpPort = 587;

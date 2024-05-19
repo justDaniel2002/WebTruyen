@@ -1,12 +1,18 @@
 import { signal, useSignal } from "@preact/signals-react";
-import { getUserInfo, login } from "../apis/service";
+import { getUserInfo, login, resetPassword } from "../apis/service";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { checkPasswordLength, getEmailPrefix, validateEmail } from "../helpers/helper";
+import {
+  checkPasswordLength,
+  getEmailPrefix,
+  validateEmail,
+} from "../helpers/helper";
 import { useRecoilState } from "recoil";
 import { jwtATom, userInfoAtom } from "../states/atom";
 import { toast } from "react-toastify";
+import ReactModal from "react-modal";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export const LoginContainer = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +20,8 @@ export const LoginContainer = () => {
   const [cookies, setCookie] = useCookies(["JWT"]);
   const [JWT, setJWT] = useRecoilState(jwtATom);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const [forgotPassModal, setForgotModal] = useState(false);
+  const [forgotPassEmail, setForgotEmail] = useState("");
   const navigate = useNavigate();
 
   const Login = async () => {
@@ -33,24 +41,38 @@ export const LoginContainer = () => {
     if (result?.type != "error") {
       getUserInfo(result).then((res) => {
         if (res?.type == "error") {
-          setCookie('JWT', undefined);
+          setCookie("JWT", undefined);
           setJWT(undefined);
           setUserInfo(undefined);
         } else {
-          setCookie('JWT', result);
+          setCookie("JWT", result);
           setJWT(result);
           setUserInfo({ ...res, username: getEmailPrefix(res.email) });
           toast.info(`Xin chào ${getEmailPrefix(res.email)}`);
-          if(res?.role.id==2){
+          if (res?.role.id == 2) {
             navigate("/admin");
-          }else{
+          } else {
             navigate("/");
           }
         }
       });
-      
     }
   };
+
+  const resetP =()=>{
+    if(forgotPassEmail?.length<1){
+      toast.warning("Email không được để trống")
+      return
+    }
+
+    if(!validateEmail(forgotPassEmail)){
+      toast.warning("Sai định dạng email")
+      return
+    }
+
+    resetPassword(forgotPassEmail)
+    setForgotModal(false)
+  }
 
   return (
     <>
@@ -79,7 +101,7 @@ export const LoginContainer = () => {
           />
         </div>
         <div className="text-right">
-          <button>Quên mật khẩu ?</button>
+          <button onClick={() => setForgotModal(true)}>Quên mật khẩu ?</button>
         </div>
         <div className="my-10"></div>
         <button
@@ -89,6 +111,35 @@ export const LoginContainer = () => {
           Đăng Nhập
         </button>
       </div>
+
+      <ReactModal
+        isOpen={forgotPassModal}
+        className="w-1/2 m-auto px-10 py-5 mt-20 bg-neutral-100 text-black text-xl border"
+        contentLabel="Quên mật khẩu"
+      >
+        <div>
+          <div
+            className="flex justify-end"
+            onClick={() => setForgotModal(false)}
+          >
+            <Icon icon="ion:log-out" className="text-3xl" />
+          </div>
+          <div className="my-5">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-left">Email</div>
+              <input value={forgotPassEmail} onChange={(event) => setForgotEmail(event.target.value)} className="px-5 py-1" />
+            </div>
+            <div className="flex justify-end">
+              <button
+                className="py-2 px-5 bg-blue-800 mt-3 text-white"
+                onClick={resetP}
+              >
+                Gửi
+              </button>
+            </div>
+          </div>
+        </div>
+      </ReactModal>
     </>
   );
 };

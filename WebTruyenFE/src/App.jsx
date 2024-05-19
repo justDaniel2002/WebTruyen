@@ -26,6 +26,9 @@ import { CreateNovel } from "./pages/CreateNovel";
 import { CreateEditNovel } from "./components/CreateEditNovel";
 import { EditNovel } from "./pages/EditNovel";
 import { ManageAccounts } from "./pages/Admin/ManageAccount";
+import { ManageReviews } from "./pages/Admin/ManageReviews";
+import { ManageRate } from "./pages/Admin/ManageRating";
+import { ManageCategories } from "./pages/Admin/ManageCate";
 
 function App() {
   
@@ -55,6 +58,9 @@ function App() {
             <Route path="editNovel/:id" element={<EditNovel />} />
             <Route path="manageNovel" element={<ManageStories />} />
             <Route path="managerAccount" element={<ManageAccounts />} />
+            <Route path="managerReview" element={<ManageReviews />} />
+            <Route path="managerRating" element={<ManageRate />} />
+            <Route path="managerCategories" element={<ManageCategories />} />
           </Route>
         </Route>
       </Route>

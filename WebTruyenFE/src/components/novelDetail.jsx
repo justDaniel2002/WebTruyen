@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { jwtATom, storiesAtom, userInfoAtom } from "../states/atom";
 import { emptyAvatar } from "../data/data";
@@ -16,6 +16,7 @@ import {
 import { CreateReview, DeleteChapter, GetStoryDetail } from "../apis/apis";
 import { toast } from "react-toastify";
 import { getEmailPrefix } from "../helpers/helper";
+import { RatingContainer } from "./ratingContainer";
 
 export const NovelDetail = ({ novel, setNovel }) => {
   const [stories, setStories] = useRecoilState(storiesAtom);
@@ -61,7 +62,7 @@ export const NovelDetail = ({ novel, setNovel }) => {
     callAPIFEDelToken(JWT, DeleteChapter, id).then((res) => {
       if (res.type != "error") {
         toast.success("Xóa Chương Thành Công");
-        callApiFEGet(GetStoryDetail, id).then((response) => setNovel(response));
+        setNovel()
       }
     });
   };
@@ -90,23 +91,17 @@ export const NovelDetail = ({ novel, setNovel }) => {
                   </span>{" "}
                   {novel?.chapers?.length ?? 0}{" "}
                 </div>
+                {novel?.createdBy==userInfo?.id?<div className="mb-3">
+                  <Link to={`/user/editNovel/${novel?.id}`} className="font-extrabold text-neutral-700">Chỉnh sửa </Link>
+                </div>:""}
               </div>
             </div>
             <div className="w-3/4 px-10 ">
               <div className="text-center">{novel?.title ?? ""}</div>
               <hr className="my-5 w-full" />
-              <div className="flex text-lg justify-center mb-5">
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-                <Icon icon="emojione:star" />
-              </div>
+              
+                <RatingContainer rates={novel?.rates} story={novel} setStory={setNovel}/>
+              
               <div className="text-lg font-thin">
                 <p>{novel?.description} </p>
               </div>
@@ -246,7 +241,7 @@ export const NovelDetail = ({ novel, setNovel }) => {
         ) : (
           ""
         )}
-        <CommentContainer comment={novel?.reviews} />
+        <CommentContainer comment={novel?.reviews} setNovel={setNovel}/>
       </div>
     </>
   );

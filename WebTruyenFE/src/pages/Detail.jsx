@@ -9,11 +9,14 @@ export const Detail = () => {
     const [novelDetail, setDetail] = useState({})
     const params = useParams()
     const id = params.id
-    useEffect(() => {
+    const setNovel = async()=>{
         callApiFEGet(GetStoryDetail, id).then((response) => setDetail(response))
+    }
+    useEffect(() => {
+        setNovel()
     },[])
 
     return <>
-    <NovelDetail novel={novelDetail} setNovel={setDetail}/>
+    <NovelDetail novel={novelDetail} setNovel={setNovel}/>
     </>
 }

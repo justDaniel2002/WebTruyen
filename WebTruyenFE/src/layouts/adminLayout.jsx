@@ -29,6 +29,30 @@ export const AdminLayout = () => {
               
             </div>
           </div>
+          <div>
+            <div className="dropdown w-full">
+              <button onClick={() => {navigate("/admin/managerReview")}} className="dropbtn">
+                Quản lý bình luận
+              </button>
+              
+            </div>
+          </div>
+          <div>
+            <div className="dropdown w-full">
+              <button onClick={() => {navigate("/admin/managerRating")}} className="dropbtn">
+                Quản lý rating
+              </button>
+              
+            </div>
+          </div>
+          <div>
+            <div className="dropdown w-full">
+              <button onClick={() => {navigate("/admin/managerCategories")}} className="dropbtn">
+                Quản lý thể loại
+              </button>
+              
+            </div>
+          </div>
         </div>
         <div className="w-4/5">
           <Outlet />

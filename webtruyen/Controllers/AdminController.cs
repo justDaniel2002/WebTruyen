@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 using webtruyen.DTO;
 using webtruyen.Model;
 
@@ -54,6 +55,65 @@ namespace webtruyen.Controllers
             account.IsActive = !account.IsActive;
             context.SaveChanges();
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("getListReview")]
+        public IActionResult getListReview([FromBody] SearchRequestDTO request)
+        {
+            List<Review> reviews = context.Reviews.Include(n => n.User).Include(n => n.Story).ToList();
+            if (request != null)
+            {
+                if (request.searchValue != null)
+                {
+                    reviews = reviews.Where(n => n.Content.Contains(request.searchValue)).ToList();
+                }
+                
+            }
+            return Ok(reviews);
+        }
+
+        [HttpPost]
+        [Route("getListRate")]
+        public IActionResult getListRate([FromBody] SearchRequestDTO request)
+        {
+            List<Rate> rates = context.Rates.Include(n => n.Account).Include(n => n.Story).ToList();
+            if (request != null)
+            {
+                if (request.searchValue != null)
+                {
+                    rates = rates.Where(n => n.Story.Title.Contains(request.searchValue)).ToList();
+                }
+
+            }
+            return Ok(rates);
+        }
+
+        [HttpDelete]
+        [Route("deleteRating/{id}")]
+        public IActionResult deleteReview(int id)
+        {
+            Rate rate = context.Rates.FirstOrDefault(n => n.Id == id);
+
+            context.Rates.Remove(rate);
+            context.SaveChanges();
+            return Ok("Remove rate Successfully!");
+        }
+
+        [HttpPost]
+        [Route("getListCate")]
+        public IActionResult getListCate([FromBody] SearchRequestDTO request)
+        {
+            List<Category> cates = context.Categories.ToList();
+            if (request != null)
+            {
+                if (request.searchValue != null)
+                {
+                    cates = cates.Where(n => n.Name.Contains(request.searchValue)).ToList();
+                }
+
+            }
+            return Ok(cates);
         }
 
 
