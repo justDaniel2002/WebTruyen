@@ -41,5 +41,7 @@ public partial class Story
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
+    public virtual ICollection<View> Views { get; set; } = new List<View>();
+
     public virtual ICollection<Account> Users { get; set; } = new List<Account>();
 }

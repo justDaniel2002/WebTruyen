@@ -92,7 +92,11 @@ export const callApiFEGet = async (URL, params = "") => {
 
 export const callApiFEPost = async (URL, data = {}) => {
   try {
-    const res = await axios.post(URL, data);
+    const res = await axios.post(URL, data, {
+      headers: {
+        "Content-Type": "application/json-patch+json",
+      },
+    });
     return res.data;
   } catch (error) {
     toast.error(error.message);
@@ -210,14 +214,14 @@ export const changePassword = async (token, data) => {
 
 export const resetPassword = async (email) => {
   try {
-    const res = await axios.post(ResetPassword, email,{
+    const res = await axios.post(ResetPassword, email, {
       headers: {
-        "Content-Type":"application/json-patch+json"
-      }
+        "Content-Type": "application/json-patch+json",
+      },
     });
-    toast.info("Hãy kiểm tra email của bạn")
+    toast.info("Hãy kiểm tra email của bạn");
     return res.data;
   } catch (error) {
-    toast.error("Email này chưa đăng ký tài khoản")
+    toast.error("Email này chưa đăng ký tài khoản");
   }
 };

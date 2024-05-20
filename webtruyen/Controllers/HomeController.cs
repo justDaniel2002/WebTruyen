@@ -529,6 +529,22 @@ namespace webtruyen.Controllers
             return Ok("Remove review Successfully!");
         }
 
+        [HttpPost]
+        [Route("addView")]
+        public IActionResult addView([FromBody]long storyId)
+        {
+
+            View view = new View
+            {
+                StoryId = storyId,
+                ViewDate = DateTime.Now,
+            };
+            context.Views.Add(view);
+            context.SaveChanges();
+            return Ok(view);
+
+        }
+
 
     }
 }

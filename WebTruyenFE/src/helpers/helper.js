@@ -23,3 +23,16 @@ export function validateEmail(email) {
     // Test the email against the pattern
     return emailPattern.test(email);
 }
+
+export function formatDateString(isoDateString) {
+    // Parse the ISO 8601 date string into a Date object
+    const date = new Date(isoDateString);
+  
+    // Extract the day, month, and year
+    const day = String(date.getDate()).padStart(2, '0'); // Pad with leading zero if needed
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+  
+    // Format the date as "dd/mm/yyyy"
+    return `${day}/${month}/${year}`;
+  }

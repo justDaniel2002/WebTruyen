@@ -29,6 +29,8 @@ public partial class WebtruyenContext : DbContext
 
     public virtual DbSet<Story> Stories { get; set; }
 
+    public virtual DbSet<View> Views { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("server =DESKTOP-6A025HU\\SQL2019; database = webtruyen;uid=sa;pwd=123;TrustServerCertificate=true");
@@ -214,6 +216,22 @@ public partial class WebtruyenContext : DbContext
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.StoriesNavigation)
                 .HasForeignKey(d => d.CreatedBy)
                 .HasConstraintName("FK_Story_Account");
+        });
+
+        modelBuilder.Entity<View>(entity =>
+        {
+            entity.ToTable("View");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.StoryId).HasColumnName("storyId");
+            entity.Property(e => e.ViewDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("viewDate");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.Views)
+                .HasForeignKey(d => d.StoryId)
+                .HasConstraintName("FK_View_Story");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|d:\\vscode project\\reactjs\u002B.net\\webtruyen\\webtruyen\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|d:\\vscode project\\reactjs\u002B.net\\webtruyen\\webtruyen\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|d:\\vscode project\\reactjs\u002B.net\\webtruyen\\webtruyen\\model\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:model\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|d:\\vscode project\\reactjs\u002B.net\\webtruyen\\webtruyen\\model\\story.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:model\\story.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|d:\\vscode project\\reactjs\u002B.net\\webtruyen\\webtruyen\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|d:\\vscode project\\reactjs\u002B.net\\webtruyen\\webtruyen\\model\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|solutionrelative:model\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D08CCA73-7339-4B7B-8E9B-0FCD238EBEF9}|webtruyen.csproj|d:\\vscode project\\reactjs\u002B.net\\webtruyen\\webtruyen\\dto\\chapterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -98,7 +102,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
+              "Title": "Story.cs",
+              "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Model\\Story.cs",
+              "RelativeDocumentMoniker": "Model\\Story.cs",
+              "ToolTip": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Model\\Story.cs",
+              "RelativeToolTip": "Model\\Story.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-20T04:55:27.795Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -106,12 +122,11 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-18T18:05:29.154Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-18T18:05:29.154Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ChapterDTO.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\ChapterDTO.cs",
               "RelativeDocumentMoniker": "DTO\\ChapterDTO.cs",
@@ -119,12 +134,11 @@
               "RelativeToolTip": "DTO\\ChapterDTO.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-15T08:01:00.878Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-15T08:01:00.878Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -132,38 +146,37 @@
               "RelativeToolTip": "Controllers\\AuthController.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAAAAAAAAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-13T05:58:14.47Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-13T05:58:14.47Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
               "ToolTip": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AQIAAPwBAAAAAAAAAAAcwBECAAAJAAAA",
+              "ViewState": "AQIAABACAAAAAAAAAAAkwBUCAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-13T05:58:17.947Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AdminController.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
               "ToolTip": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Controllers\\AdminController.cs",
               "RelativeToolTip": "Controllers\\AdminController.cs",
-              "ViewState": "AQIAAF4AAAAAAAAAAAAkwHMAAAAbAAAA",
+              "ViewState": "AQIAAIYAAAAAAAAAAAAowJIAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-13T06:05:49.747Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "AccountRequestDTO.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\AccountRequestDTO.cs",
               "RelativeDocumentMoniker": "DTO\\AccountRequestDTO.cs",
@@ -171,12 +184,11 @@
               "RelativeToolTip": "DTO\\AccountRequestDTO.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-15T05:38:05.78Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-15T05:38:05.78Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Account.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Model\\Account.cs",
               "RelativeDocumentMoniker": "Model\\Account.cs",
@@ -184,12 +196,11 @@
               "RelativeToolTip": "Model\\Account.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-19T21:04:11.04Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-19T21:04:11.04Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "SearchRequestDTO.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\SearchRequestDTO.cs",
               "RelativeDocumentMoniker": "DTO\\SearchRequestDTO.cs",
@@ -197,12 +208,11 @@
               "RelativeToolTip": "DTO\\SearchRequestDTO.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-19T21:34:40.946Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-19T21:34:40.946Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "webtruyen",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\webtruyen.csproj",
               "RelativeDocumentMoniker": "webtruyen.csproj",
@@ -213,7 +223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "RatingDTO.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\RatingDTO.cs",
               "RelativeDocumentMoniker": "DTO\\RatingDTO.cs",
@@ -225,7 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Rate.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Model\\Rate.cs",
               "RelativeDocumentMoniker": "Model\\Rate.cs",
@@ -237,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ChangePasswordDTO.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\ChangePasswordDTO.cs",
               "RelativeDocumentMoniker": "DTO\\ChangePasswordDTO.cs",
@@ -249,7 +259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Helper.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Ulti\\Helper.cs",
               "RelativeDocumentMoniker": "Ulti\\Helper.cs",
@@ -257,12 +267,11 @@
               "RelativeToolTip": "Ulti\\Helper.cs",
               "ViewState": "AQIAABMAAAAAAAAAAAArwCAAAABSAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-19T07:24:15.972Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-19T07:24:15.972Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -274,7 +283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "StoryCreateRequest.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\StoryCreateRequest.cs",
               "RelativeDocumentMoniker": "DTO\\StoryCreateRequest.cs",
@@ -286,7 +295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "StoryRequest.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\StoryRequest.cs",
               "RelativeDocumentMoniker": "DTO\\StoryRequest.cs",
@@ -298,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "ReviewDTO.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\ReviewDTO.cs",
               "RelativeDocumentMoniker": "DTO\\ReviewDTO.cs",
@@ -310,7 +319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "AccountInfoDTO.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\DTO\\AccountInfoDTO.cs",
               "RelativeDocumentMoniker": "DTO\\AccountInfoDTO.cs",
@@ -322,7 +331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "VNPayController.cs",
               "DocumentMoniker": "D:\\VSCode project\\ReactJS\u002B.Net\\WebTruyen\\webtruyen\\Controllers\\VNPayController.cs",
               "RelativeDocumentMoniker": "Controllers\\VNPayController.cs",

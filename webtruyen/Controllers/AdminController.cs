@@ -116,6 +116,38 @@ namespace webtruyen.Controllers
             return Ok(cates);
         }
 
+        [HttpPost]
+        [Route("getListView")]
+        public IActionResult getListView([FromBody] string searchTime)
+        {
+            List<View> view = context.Views.Include(n => n.Story).ToList();
+            if(searchTime.Equals("last 5 days"))
+            {
+                DateTime endDate = DateTime.Now;
+                DateTime startDate = endDate.AddDays(-5);
+                view = view.Where(obj => obj.ViewDate >= startDate && obj.ViewDate <= endDate).ToList();
+            }
+
+            if (searchTime.Equals("last 30 days"))
+            {
+                DateTime endDate = DateTime.Now;
+                DateTime startDate = endDate.AddDays(-30);
+                view = view.Where(obj => obj.ViewDate >= startDate && obj.ViewDate <= endDate).ToList();
+            }
+
+            if (searchTime.Equals("last month"))
+            {
+                DateTime now = DateTime.Now;
+                DateTime startOfThisMonth = new DateTime(now.Year, now.Month, 1);
+                DateTime startOfLastMonth = startOfThisMonth.AddMonths(-1);
+                DateTime endOfLastMonth = startOfThisMonth.AddDays(-1);
+                view = view.Where(obj => obj.ViewDate >= startOfLastMonth && obj.ViewDate <= endOfLastMonth).ToList();
+            }
+
+            
+            return Ok(view);
+        }
+
 
     }
 }
