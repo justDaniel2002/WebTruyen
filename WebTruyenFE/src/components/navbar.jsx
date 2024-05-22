@@ -87,7 +87,7 @@ export const Navbar = () => {
           <div className="flex items-center">
             {userInfo ? (
               <>
-                <Link to={"/user/profile"} className="flex items-center">
+                <Link to={`/${userInfo?.role?.id==1?"user":"admin"}/profile`} className="flex items-center">
                   <img src={emptyAvatar} className="rounded-full h-10 w-10" />{" "}
                   <div className="mx-2">{userInfo?.username}</div>
                 </Link>

@@ -54,6 +54,7 @@ function App() {
           
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminPage />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="addNovel" element={<CreateNovel />} />
             <Route path="editNovel/:id" element={<EditNovel />} />
             <Route path="manageNovel" element={<ManageStories />} />

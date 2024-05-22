@@ -92,7 +92,7 @@ export const NovelDetail = ({ novel, setNovel }) => {
                   {novel?.chapers?.length ?? 0}{" "}
                 </div>
                 {novel?.createdBy==userInfo?.id?<div className="mb-3">
-                  <Link to={`/user/editNovel/${novel?.id}`} className="font-extrabold text-neutral-700">Chỉnh sửa </Link>
+                  <Link to={`/${userInfo?.role?.id==1?"user":"admin"}/editNovel/${novel?.id}`} className="font-extrabold text-neutral-700">Chỉnh sửa </Link>
                 </div>:""}
               </div>
             </div>
